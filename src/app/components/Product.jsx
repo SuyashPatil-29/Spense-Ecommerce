@@ -2,15 +2,15 @@ import Link from 'next/link'
 import React from 'react'
 import urlFor from '../../../LIB/urlFor'
 import Image from 'next/image'
+import "../styles/globals.css"
 
-const Product = ({product :{image, productName, slug, price, quantity}}) => {
+const Product = ({product :{image, productName, slug, price}}) => {
   return (
-    <Link href={`/shop/${slug.current}`}>
+    <Link href={`/shop/${slug.current}`} className='min-w-fit min-h-fit'>
         <div className='product-card'>
-            <Image className='product-image' src={urlFor(image && image[0]).url()} width={250} height={250} alt={productName} />
+            <Image className='product-image bg-white bg-opacity-40' src={urlFor(image && image[0]).url()} width={250} height={250} alt={productName} />
             <p className='product-name'>{productName}</p>
-            <p className='product-quantity'>Quantity remaining: {quantity}</p>
-            <p className='product-price'>Rs {price}</p>
+            <p className='text-white'>Rs {price}</p>
         </div></Link>
   )
 }

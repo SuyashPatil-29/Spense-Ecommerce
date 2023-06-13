@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const FooterBanner = ({footerBanner : {discount, largeText1, largeText2, saleTime, smallText, midText, desc, buttonText, image}}) => {
   return (
-    <div className='footer-banner-container'>
+    <div className='footer-banner-container bg-[#f02d34] bg-opacity-20'>
     <div className='banner-desc'>
         <div className='left'>
             <p>{discount}</p>
