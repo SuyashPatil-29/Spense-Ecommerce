@@ -23,12 +23,12 @@ export default async function HomePage (){
     <div className="products-heading flex-row justify-center items-center">
     <h1 className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center">
       Best<span> </span>
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
           Selling<span> </span>
         </span>
       Products
     </h1>
-    <p class="leading-norma text-[rgb(122,133,234)] md:text-2xl mb-8 text-center">
+    <p className="leading-norma text-[rgb(122,133,234)] md:text-2xl mb-8 text-center">
             The best of Spense Store
     </p>
     </div>

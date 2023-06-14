@@ -18,7 +18,7 @@ const FooterBanner = ({footerBanner : {discount, largeText1, largeText2, saleTim
             <h3>{midText}</h3>
             <p>{desc}</p>
             <Link href={`/product`}>
-                <button type='button'>{buttonText}</button>
+                <button className=' shadow-2xl shadow-black hover:opacity-80 hover:scale-110 transition duration-300 ease-in-out' type='button'>{buttonText}</button>
             </Link>
             <Image src={urlFor(image).url()} width={500} height={500} className='footer-banner-image' alt='footerBanner' />
         </div>

@@ -36,8 +36,6 @@ export default function ProductDetails({ params }) {
       fetchVendor(); 
     }, []);
 
-    console.log(Array.isArray(vendor));
-
     return(
         <div>
         {productArray.map((product)=>{
