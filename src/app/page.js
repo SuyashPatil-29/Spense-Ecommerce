@@ -19,7 +19,7 @@ export default async function HomePage (){
 
   return (
     <div>
-    <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
+    <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
     <div className="products-heading flex-row justify-center items-center">
     <h1 className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center">
       Best<span> </span>

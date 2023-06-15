@@ -85,12 +85,12 @@ export default function ProductDetails({ params }) {
                                 <p className="max-w-3xl">
                                     {details}
                                 </p>
-                                <p className='price mt-6 text-lg font-bold text-pink-400'>Price : <spam className='text-slate-200'>Rs{price}</spam></p>
+                                <p className='price mt-6 text-lg font-bold text-pink-400'>Price : <span className='text-slate-200'>Rs{price}</span></p>
                                 <div className='flex justify-between items-center lg:min-w-[55vw]'>
                                 {quantity === 0 ? <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-red-500'>0</span></p> : <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-slate-200'>{quantity}</span></p>}
                                 <h3>{vendor.map((vendor) => (
                                     vendor.products.map((product) => (
-                                        product.slug.current.trim().toLowerCase() === params.slug ? <p key={product._id} className='text-lg font-bold text-cyan-400 underline'>Vendor: {vendor.name}</p> : null
+                                        product.slug.current.trim().toLowerCase() === params.slug ? <p key={product.slug.current} className='text-lg font-bold text-cyan-400 underline'>Vendor: {vendor.name}</p> : null
                                         ))
                                     ))}
                                 </h3>
@@ -114,7 +114,7 @@ export default function ProductDetails({ params }) {
                     <div className="marquee">
                     <div className="maylike-products-container track">
                         {productArray.map((item) => (
-                        <Product key={item._id} product={item} />
+                        <Product key={item.slug.current} product={item} />
                         ))}
                     </div>
                     </div>

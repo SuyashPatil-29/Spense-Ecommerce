@@ -17,9 +17,9 @@ function Shop() {
   }, []);
 
   return (
-    <div className='my-9 mx-16'>
+    <div className='my-9 lg:mx-16 mx-auto'>
       {productArray.map((product) => (
-        <ProductDisplay key={product._id} product={product}/>
+        <ProductDisplay key={product.slug.current} product={product}/>
       ))}
     </div>
   );
