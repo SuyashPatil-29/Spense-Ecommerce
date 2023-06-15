@@ -6,6 +6,7 @@ import urlFor from '../../../../LIB/urlFor'
 import { groq } from 'next-sanity'
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Product } from '@/app/components'
+import Link from 'next/link'
 
 const products = groq`
       *[_type == "vendor"].products[]
@@ -90,7 +91,7 @@ export default function ProductDetails({ params }) {
                                 {quantity === 0 ? <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-red-500'>0</span></p> : <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-slate-200'>{quantity}</span></p>}
                                 <h3>{vendor.map((vendor) => (
                                     vendor.products.map((product) => (
-                                        product.slug.current.trim().toLowerCase() === params.slug ? <p key={product.slug.current} className='text-lg font-bold text-cyan-400 underline'>Vendor: {vendor.name}</p> : null
+                                        product.slug.current.trim().toLowerCase() === params.slug ? <Link href={`/vendors/${vendor.name}`} key={product.slug.current} className='text-lg font-bold text-cyan-400 underline'>More by: {vendor.name}</Link> : null
                                         ))
                                     ))}
                                 </h3>
