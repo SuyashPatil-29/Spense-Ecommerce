@@ -5,6 +5,8 @@ import "./styles/globals.css"
 import { Product, Footer, HeroBanner, Cart, Navbar, FooterBanner, ComponentLayout } from './components'
 import { client } from '../../LIB/client'
 import { groq } from 'next-sanity';
+import CategoryHolder from './components/CategoryHolder'
+
 const query = `*[_type == "BestProducts"]`;
 
 const bannerQuery = groq`
@@ -13,16 +15,27 @@ const bannerQuery = groq`
 }
 `;
 
+const categoryData = groq`
+*[_type == "category"]
+`;
+
+
 export default async function HomePage (){
   const bestProducts = await client.fetch(query);
   const bannerData = await client.fetch(bannerQuery);
+  const categories = await client.fetch(categoryData);
 
   return (
     <div>
+    <div className="flex my-14 gap-6 justify-center items-center">
+       {categories.map((category) => {
+          return <CategoryHolder key={category._id} category={category} />
+       })}
+    </div>
     <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
     <div className="products-heading flex-row justify-center items-center">
     <h1 className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center">
-      Best<span> </span>
+      Worst<span> </span>
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
           Selling<span> </span>
         </span>

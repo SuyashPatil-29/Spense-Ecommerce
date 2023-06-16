@@ -49,6 +49,17 @@ width: 100%;
   overflow-x: hidden;
 }
 
+.category-marquee {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+@keyframes category-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .track {
   position: absolute;
   white-space: nowrap;
@@ -722,6 +733,7 @@ margin-top: 160px;
   animation: marquee 10s linear infinite;
   width: 550%;
 }
+
 .success-wrapper, .cancel-wrapper{
  
   min-height: 69vh;

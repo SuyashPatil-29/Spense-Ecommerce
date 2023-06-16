@@ -1,3 +1,5 @@
+import Category from "./category";
+
 const Vendor = {
   name: 'vendor',
   title: 'Vendor',
@@ -29,6 +31,18 @@ const Vendor = {
               name: 'productName',
               title: 'Product Name',
               type: 'string',
+            },
+            {
+              name: 'category',
+              title: 'Category',
+              type: 'reference',
+              to: [{ type: 'category' }],
+              options: {
+                // Prompt to select existing categories or create new ones
+                addUnlisted: true,
+              },
+              // Specify the field to display from the referenced category
+              displayField: 'name',
             },
             {
               name: 'slug',
