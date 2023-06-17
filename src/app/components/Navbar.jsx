@@ -9,7 +9,8 @@ const Navbar = () => {
     <div className='navbar-container'>
       <p className='logo'>
         <Link href="/" >
-            <span className="text-2xl font-bold tracking-tight lg:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SpenseStore</span></Link>
+            <span className="text-2xl font-bold tracking-tight lg:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SpenseStore</span>
+        </Link>
       </p>
       <div className='flex items-center justify-between gap-x-14'>
       <Link href="/shop" className=' text-2xl text-white hover:underline transition duration-700'>Shop</Link>

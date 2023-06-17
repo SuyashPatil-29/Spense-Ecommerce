@@ -27,11 +27,14 @@ export default async function HomePage (){
 
   return (
     <div>
-    <div className="flex my-14 gap-6 justify-center items-center">
-       {categories.map((category) => {
-          return <CategoryHolder key={category._id} category={category} />
-       })}
+    <div className="my-14">
+      <div className="categories-container overflow-y-auto flex lg:gap-6 gap-3 lg:justify-center md:justify-center justify-start items-center">
+        {categories.map((category) => {
+          return <CategoryHolder key={category._id} category={category} />;
+        })}
+      </div>
     </div>
+
     <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
     <div className="products-heading flex-row justify-center items-center">
     <h1 className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center">

@@ -105,8 +105,8 @@ export default function ProductDetails({ params }) {
                                     </p>
                                 </div>
                                 <div className="buttons">
-                                  {quantity === 0 ? null : <button type="button" className="add-to-cart" onClick={() => (console.log('hello'))}>Add to Cart</button>}
-                                  <button type="button" className={(quantity === 0 ? 'cursor-not-allowed w-[200px] py-[10px] px-[20px] border-none mt-10 text-lg font-medium bg-[#f02d34] text-white ' : `buy-now`)} onClick={() => (console.log('hello'))}>{quantity === 0 ? 'Out of Stock' : 'Buy Now'}</button>
+                                  {quantity === 0 ? null : <button type="button" className="add-to-cart rounded-2xl shadow-2xl shadow-black" onClick={() => (console.log('hello'))}>Add to Cart</button>}
+                                  <button type="button" className={(quantity === 0 ? 'cursor-not-allowed w-[200px] py-[10px] px-[20px] border-none mt-10 text-lg font-medium rounded-2xl shadow-2xl shadow-black bg-[#f02d34] text-white ' : `buy-now rounded-2xl shadow-2xl shadow-black`)} onClick={() => (console.log('hello'))}>{quantity === 0 ? 'Out of Stock' : 'Buy Now'}</button>
                                 </div>
                         </div>
                     </div>
