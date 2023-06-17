@@ -23,8 +23,7 @@ function Vendor({params}) {
 
   return (
     <div className='my-9 lg:mx-16 mx-auto'>
-        <h1 className='text-3xl font-semibold text-white mt-5 mb-2'>Best of {decodeURIComponent(params.slug)}</h1>
-        <hr className='mb-[60px] opacity-40'/>
+        <h1 className='text-3xl font-semibold text-white mt-5 mb-14'>Best of {decodeURIComponent(params.slug)}</h1>
         {products.map((product) => (
             <ProductDisplay key={product.slug.current} product={product} />
         ))

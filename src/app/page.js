@@ -6,6 +6,8 @@ import { Product, Footer, HeroBanner, Cart, Navbar, FooterBanner, ComponentLayou
 import { client } from '../../LIB/client'
 import { groq } from 'next-sanity';
 import CategoryHolder from './components/CategoryHolder'
+import BestProductsDisplay from "../app/components/BestProductsDisplay"
+
 
 const query = `*[_type == "BestProducts"]`;
 
@@ -52,7 +54,7 @@ export default async function HomePage (){
         <div>
           <div className="products-container">
             {bestProducts.map((product) => {
-              return <Product key={product.slug.current} product={product} />
+              return <BestProductsDisplay key={product.slug.current} product={product} />
             })}
           </div>
       </div>

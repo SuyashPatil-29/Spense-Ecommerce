@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
-import urlFor from '../../../LIB/urlFor'
+import urlFor from "../../../LIB/urlFor"
 import Image from 'next/image'
 import "../styles/globals.css"
 
-const Product = ({product :{image, productName, slug, price}}) => {
+const BestProductsDisplay = ({product :{image, productName, slug, price}}) => {
   return (
-    <Link href={`/shop/${slug.current}`} className='lg:min-w-fit lg:min-h-fit md:min-w-fit md:min-h-fit h-[150px] w-[150px]'>
+    <Link href={`/shop/${slug.current}`} className='min-w-fit min-h-fit'>
         <div className='product-card'>
             <Image className='product-image bg-white bg-opacity-40' src={urlFor(image && image[0]).url()} width={250} height={250} alt={productName} />
             <p className='product-name'>{productName}</p>
@@ -15,4 +15,4 @@ const Product = ({product :{image, productName, slug, price}}) => {
   )
 }
 
-export default Product
+export default BestProductsDisplay

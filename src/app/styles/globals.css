@@ -30,12 +30,6 @@ width: 100%;
   padding: 10px;
 }
 
-.navbar-container{
-  display: flex;
-  justify-content: space-between;
-  margin: 6px 18px;
-  position: relative;
-}
 .marquee-text{
   font-size: 29px;
   font-weight: 600;
@@ -44,7 +38,6 @@ width: 100%;
 }
 .marquee {
   position: relative;
-  height: 400px;
   width: 100%;
   overflow-x: hidden;
 }
@@ -78,11 +71,6 @@ width: 100%;
  span.text-red {
     -webkit-text-stroke: 1px #f02d34;
     margin-left: 6px;
-}
-.logo{
-  color: gray;
-  font-size: 18px;
-
 }
 .cart-icon{
   font-size: 25px;

@@ -104,7 +104,7 @@ export default function ProductDetails({ params }) {
                                 {quantity === 0 ? <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-red-500'>0</span></p> : <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-slate-200'>{quantity}</span></p>}
                                 <h3>{vendor.map((vendor) => (
                                     vendor.products.map((product) => (
-                                        product.slug.current.trim().toLowerCase() === params.slug ? <Link href={`/vendors/${vendor.name}`} key={product.slug.current} className='text-lg font-semibold text-cyan-400 rounded-2xl p-3 und hover:bg-white hover:bg-opacity-30'>More by : <span className="underline">{vendor.name}</span> </Link> : null
+                                        product.slug.current.trim().toLowerCase() === params.slug ? <Link href={`/vendors/${vendor.name}`} key={product.slug.current} className='text-lg font-semibold text-cyan-400 rounded-2xl lg:p-3 md:p-3 p-2 hover:bg-white hover:bg-opacity-30 whitespace-nowrap'>Vendor: <span className="underline">{vendor.name}</span> </Link> : null
                                         ))
                                     ))}
                                 </h3>
@@ -125,7 +125,7 @@ export default function ProductDetails({ params }) {
                     </div>
                     <div className='maylike-products-wrapper w-[80vw] mx-auto'>
                     <h2 >You may also like</h2>
-                    <div className="marquee">
+                    <div className="marquee lg:h-[400px] md:h-[400px] h-[250px]">
                     <div className="maylike-products-container track">
                         {productArray.map((item) => (
                         <Product key={item.slug.current} product={item} />
