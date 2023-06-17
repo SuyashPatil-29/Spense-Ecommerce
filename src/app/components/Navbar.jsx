@@ -14,6 +14,7 @@ const Navbar = () => {
       </p>
       <div className='flex items-center justify-between gap-x-14'>
       <Link href="/shop" className=' text-2xl text-white hover:underline transition duration-700'>Shop</Link>
+      <Link href="/vendors" className=' text-2xl text-white hover:underline transition duration-700'>Vendors</Link>
       <button type='button' className='cart-icon' onClick={() => {}}>
         <AiOutlineShopping />
         <span className='cart-item-qty bottom-4 relative'>0</span>

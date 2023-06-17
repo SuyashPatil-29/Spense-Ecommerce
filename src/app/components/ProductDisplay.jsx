@@ -39,7 +39,7 @@ function ProductDisplay({product}) {
     
 
   return (
-      <Link href={`/shop/${product.slug.current}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=" min-w-fit ">
+      <Link href={`/shop/${product.slug?.current}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className=" min-w-fit ">
             <div className='w-4/5 lg:flex md:flex flex-row items-center bg-white h-[250px] bg-opacity-20 rounded-2xl my-6 shadow-2xl hover:transition hover:ease-in-out hover:scale-105 duration-300 min-w-[300px] mx-auto'>
             <div className="lg:w-2/5 md:w-2/5 w-1/2 lg:ml-12 mx-auto">
               <Image src={urlFor(product.image[index]).url()} alt="Product Image" className=" lg:max-h-[250px] lg:max-w-[250px] rounded-2xl md:max-h-[250px] md:max-w-[250px] object-cover w-full max-h-[180px] min-h-[120px]" width={300} height={250} />

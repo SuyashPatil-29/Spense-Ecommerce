@@ -2,15 +2,20 @@
 import { groq } from 'next-sanity';
 import React, { useEffect, useState } from 'react';
 import { client } from '../../../../LIB/client';
-import ProductDisplay from '@/app/components/ProductDisplay';
+import ProductDisplay from '../../components/ProductDisplay';
 
 const productsQuery = groq`
   *[_type == "vendor"].products[]
 `;
 
+const categoryQuery = groq`
+*[_type == "category"]
+`;
+
 const CategoryPage = ({ params }) => {
   const [productArray, setProductArray] = useState([]);
   const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -18,6 +23,11 @@ const CategoryPage = ({ params }) => {
       setProductArray(productsData);
     }
     fetchProducts();
+    async function fetchCategory() {
+      const categoryData = await client.fetch(categoryQuery);
+      setCategory(categoryData);
+    }
+    fetchCategory()
   }, []);
 
   useEffect(() => {
@@ -49,12 +59,6 @@ const CategoryPage = ({ params }) => {
   if(!products.length) return (
     <div className='text-white text-3xl'>
       <h1>Loading...</h1>
-    </div>
-  )
-
-  if(products.length === 0) return (
-    <div className='text-white text-3xl place-content-center'>
-      <h1>No Products Found</h1>
     </div>
   )
 

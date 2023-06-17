@@ -1,8 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { client } from '../../../../LIB/client';
-import ProductDisplay from '@/app/components/ProductDisplay';
-
+import ProductDisplay from '../../components/ProductDisplay';
 
 const query = `*[_type == "vendor"]`;
 
@@ -24,7 +23,8 @@ function Vendor({params}) {
 
   return (
     <div className='my-9 lg:mx-16 mx-auto'>
-        <h1 className='text-3xl font-bold text-white underline my-16'>All the items by {decodeURIComponent(params.slug)}</h1>
+        <h1 className='text-3xl font-semibold text-white mt-5 mb-2'>Best of {decodeURIComponent(params.slug)}</h1>
+        <hr className='mb-[60px] opacity-40'/>
         {products.map((product) => (
             <ProductDisplay key={product.slug.current} product={product} />
         ))

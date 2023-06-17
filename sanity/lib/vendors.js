@@ -11,6 +11,11 @@ const Vendor = {
       type: 'string',
     },
     {
+      name: "mainImage",
+      title: "Main Image",
+      type: "image",
+    },
+    {
       name: 'products',
       title: 'Products',
       type: 'array',

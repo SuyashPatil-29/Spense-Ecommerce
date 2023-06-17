@@ -5,8 +5,8 @@ import { client } from '../../../../LIB/client'
 import urlFor from '../../../../LIB/urlFor'
 import { groq } from 'next-sanity'
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { Product } from '@/app/components'
 import Link from 'next/link'
+import { Product } from '../../components'
 
 const products = groq`
       *[_type == "vendor"].products[]
@@ -18,6 +18,19 @@ const vedor = groq`
         products
     }
 `
+export async function generateStaticParams() {
+    const query = groq`
+    *[_type == "vendor"].products[]{
+        "slug": slug.current
+      }
+    `
+    const slug = await client.fetch(query)
+    const slugRoutes = slug.map((slug)=>slug.slug.current)
+    
+    return slugRoutes.map((slug)=>({
+      slug,
+    }))
+    }
 
 export default function ProductDetails({ params }) {
     const [index, setIndex] = useState(0);
@@ -91,7 +104,7 @@ export default function ProductDetails({ params }) {
                                 {quantity === 0 ? <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-red-500'>0</span></p> : <p className='text-lg font-bold text-pink-400'>Remaining Quantity : <span className='text-slate-200'>{quantity}</span></p>}
                                 <h3>{vendor.map((vendor) => (
                                     vendor.products.map((product) => (
-                                        product.slug.current.trim().toLowerCase() === params.slug ? <Link href={`/vendors/${vendor.name}`} key={product.slug.current} className='text-lg font-bold text-cyan-400 underline'>More by: {vendor.name}</Link> : null
+                                        product.slug.current.trim().toLowerCase() === params.slug ? <Link href={`/vendors/${vendor.name}`} key={product.slug.current} className='text-lg font-semibold text-cyan-400 rounded-2xl p-3 und hover:bg-white hover:bg-opacity-30'>More by : <span className="underline">{vendor.name}</span> </Link> : null
                                         ))
                                     ))}
                                 </h3>
@@ -128,5 +141,7 @@ export default function ProductDetails({ params }) {
 
     )
     }
+
+
   
    
