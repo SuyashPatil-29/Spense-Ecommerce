@@ -1,3 +1,5 @@
+import { StateContext } from '../../context/StateContext'
+import { Toaster } from 'react-hot-toast'
 import { Footer, Navbar } from './components'
 import "./styles/globals.css"
 import { Inter } from 'next/font/google'
@@ -14,8 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className}`} style={{backgroundImage: 'url(/header.png)' , backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundColor: '#fff'}}>
+      <StateContext>
+      <Toaster />
       <div className='layout'>
-
       <header>
         <Navbar />
       </header>
@@ -26,6 +29,7 @@ export default function RootLayout({ children }) {
         <Footer />
       </footer>
       </div>
+      </StateContext>
       </body>
     </html>
   )
