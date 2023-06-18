@@ -78,7 +78,7 @@ const ProductDetails = ({ params }) => {
     <div>
       <div key={slug.current}>
         <div className="product-detail-container">
-          <div>
+          <div className='mx-auto'>
             <div className="image-container">
               <Image
                 className="product-detail-image hover:bg-red-500 hover:bg-opacity-40 bg-white bg-opacity-20 hover:rotate-6"
