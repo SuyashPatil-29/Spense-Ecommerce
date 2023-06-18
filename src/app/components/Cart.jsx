@@ -10,23 +10,12 @@ import { TiDeleteOutline } from 'react-icons/ti';
 
 const Cart = () => {
   const cartRef = useRef();
-  const { showCart, setShowCart, cartItems, totalPrice, totalQuantities, toggleCartItemQuanitity } = useStateContext();
+  const { showCart, setShowCart, cartItems, totalPrice, totalQuantities, toggleCartItemQuanitity, onRemove } = useStateContext();
 
-  const handleMinus = (product) => {
-    // Decrease quantity logic here
-  };
-
-  const handlePlus = (product) => {
-    // Increase quantity logic here
-  };
-
-  const handleRemove = (product) => {
-    // Remove item logic here
-  };
 
   return (
     <div className='cart-wrapper' ref={cartRef}>
-      <div className=' lg:w-[415px] md:w-[375px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-white'>
+      <div className=' lg:w-[700px] md:w-[550px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-white'>
         <button type='button' className='cart-heading' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
           <span className='heading'>Your Cart</span>
@@ -63,8 +52,8 @@ const Cart = () => {
                       <h4>Rs {item.price}</h4>
                     </div>
                     <div className='flex bottom'>
-                      <div className='flex justify-between w-full my-6'>
-                        <p className='quantity-desc flex items-center justify-between max-w-[45%]'>
+                      <div className='flex justify-between w-full my-6 max-w-[55%]'>
+                        <p className='quantity-desc flex items-center justify-between'>
                           <span className='minus mx-auto' onClick={() => toggleCartItemQuanitity(item._key, 'dec')}>
                             <AiOutlineMinus />
                           </span>
@@ -76,8 +65,8 @@ const Cart = () => {
                       </div>
                       <button
                         type='button'
-                        className=' text-red-600 text-3xl pr-20 remove-item'
-                        onClick={() => handleRemove(item)}
+                        className=' text-red-600 text-4xl lg:mr-10 md:mr-10 mr-4'
+                        onClick={() => onRemove(item)}
                       >
                         <TiDeleteOutline />
                       </button>
