@@ -7,33 +7,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import urlFor from '../../../LIB/urlFor';
 import { TiDeleteOutline } from 'react-icons/ti';
-import getStripe from "../../../LIB/getStripe"
 
 const Cart = () => {
   const cartRef = useRef();
   const { showCart, setShowCart, cartItems, totalPrice, totalQuantities, toggleCartItemQuanitity, onRemove } = useStateContext();
-
-  const handleCheckout = async () =>{
-    const stripe = getStripe()
-
-    const response = fetch('../api/stripe/route.js', 
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cartItems),
-    })
-
-    if(response.statusCode === 500) return;
-
-    const data = await response.json();
-
-    toast.loading("Redirecting...")
-
-    stripe.redirectToCheckout({sessionId: data.id})
-  
-  }
 
   return (
     <div className='cart-wrapper' ref={cartRef}>
@@ -105,7 +82,7 @@ const Cart = () => {
               <h3>Rs {totalPrice}</h3>
               </div>
               <div className='btn-container'>
-                <button type='button' className='btn' onClick={handleCheckout}>
+                <button type='button' className='btn' onClick={()=>console.log("hello")}>
                   Pay Now
                 </button>
               </div>
