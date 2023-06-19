@@ -1,31 +1,53 @@
 "use client"
 import React, { useRef } from 'react';
-import { Toast } from 'react-hot-toast';
+import { Toast, toast } from 'react-hot-toast';
 import { useStateContext } from '../../../context/StateContext';
 import { AiOutlineLeft, AiOutlineMinus, AiOutlinePlus, AiOutlineShopping } from 'react-icons/ai';
 import Link from 'next/link';
 import Image from 'next/image';
 import urlFor from '../../../LIB/urlFor';
 import { TiDeleteOutline } from 'react-icons/ti';
+import getStripe from "../../../LIB/getStripe"
 
 const Cart = () => {
   const cartRef = useRef();
   const { showCart, setShowCart, cartItems, totalPrice, totalQuantities, toggleCartItemQuanitity, onRemove } = useStateContext();
 
+  const handleCheckout = async () =>{
+    const stripe = getStripe()
+
+    const response = fetch('../api/stripe/route.js', 
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cartItems),
+    })
+
+    if(response.statusCode === 500) return;
+
+    const data = await response.json();
+
+    toast.loading("Redirecting...")
+
+    stripe.redirectToCheckout({sessionId: data.id})
+  
+  }
 
   return (
     <div className='cart-wrapper' ref={cartRef}>
       <div className=' lg:w-[700px] md:w-[550px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-slate-900'>
-        <button type='button' className='cart-heading' onClick={() => setShowCart(false)}>
+        <button type='button' className='cart-heading text-white' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
-          <span className='heading'>Your Cart</span>
+          <span className='heading text-white'>Your Cart</span>
           <span className='cart-num-items'>({totalQuantities} items)</span>
         </button>
 
         {cartItems.length < 1 && (
-          <div className='empty-cart'>
+          <div className='empty-cart text-white'>
             <AiOutlineShopping size={150} className='mx-auto' />
-            <h3>Your cart is empty</h3>
+            <h3 className='text-white'>Your cart is empty</h3>
             <Link href='/shop'>
               <button type='button' className='btn' onClick={() => setShowCart(false)}>
                 Continue Shopping
@@ -83,7 +105,7 @@ const Cart = () => {
               <h3>Rs {totalPrice}</h3>
               </div>
               <div className='btn-container'>
-                <button type='button' className='btn' onClick={() => setShowCart(false)}>
+                <button type='button' className='btn' onClick={handleCheckout}>
                   Pay Now
                 </button>
               </div>

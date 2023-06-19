@@ -67,7 +67,6 @@ const ProductDetails = ({ params }) => {
     fetchSlugsData();
   }, []);
 
-  console.log(slugReturned.map(slug => slug.slug.current));
 
   const { qty, setQty ,onAdd } = useStateContext();
 
