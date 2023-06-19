@@ -20,17 +20,42 @@ const vendorQuery = groq`
   }
 `;
 
+const slugsData = groq`
+*[_type == "vendor"].products[]{
+  slug
+}
+`
+
+
+export const generateStaticParams = async () => {
+  const slugsData = groq`
+  *[_type == "vendor"].products[]{
+    slug
+  }
+  `;
+
+  const slugs = await client.fetch(slugsData)
+  const slugRoutes = slugs.map((slug) => slug.slug.current)
+  return slugRoutes.map(slug => ({ slug }))
+}
+
 const ProductDetails = ({ params }) => {
   const [index, setIndex] = useState(0);
   const [productArray, setProductArray] = useState([]);
   const [vendor, setVendor] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [slugReturned, setSlug] = useState([])
 
   useEffect(() => {
     const fetchProducts = async () => {
       const productsData = await client.fetch(products);
       setProductArray(productsData);
     };
+
+    const fetchSlugsData = async() => { 
+     const slugs =await client.fetch(slugsData);
+     setSlug(slugs)
+    }
 
     const fetchVendor = async () => {
       const vendorData = await client.fetch(vendorQuery);
@@ -39,9 +64,12 @@ const ProductDetails = ({ params }) => {
 
     fetchProducts();
     fetchVendor();
+    fetchSlugsData();
   }, []);
 
-  const { decQty, incQty, qty, setQty ,onAdd } = useStateContext();
+  console.log(slugReturned.map(slug => slug.slug.current));
+
+  const { qty, setQty ,onAdd } = useStateContext();
 
   const handleIncQty = () => {
     if (qty >= selectedProduct.quantity) {
@@ -52,8 +80,8 @@ const ProductDetails = ({ params }) => {
   };
   
   const handleDecQty = () => {
-    if (qty - 1 < 0) {
-      setQty(0);
+    if (qty - 1 < 1) {
+      setQty(1);
     } else {
       setQty((prevQty) => prevQty - 1);
     }
@@ -64,7 +92,7 @@ const ProductDetails = ({ params }) => {
     const matchedProduct = productArray.find(
       (product) => product.slug.current.trim().toLowerCase() === params.slug
     );
-    setQty(0)
+    setQty(1)
     setSelectedProduct(matchedProduct);
   }, [productArray, params.slug, setQty]);
 
@@ -106,7 +134,7 @@ const ProductDetails = ({ params }) => {
               ))}
             </div>
           </div>
-          <div>
+          <div className=''>
             <div className="product-detail-desc text-pink-600 text-4xl font-extrabold">
               <h1>{productName}</h1>
             </div>
@@ -147,7 +175,7 @@ const ProductDetails = ({ params }) => {
                         key={product.slug.current}
                         className="text-lg font-semibold text-cyan-400 rounded-2xl lg:p-3 md:p-3 p-2 hover:bg-white hover:bg-opacity-30 whitespace-nowrap"
                       >
-                        Vendor: <span className="underline">{vendor.name}</span>
+                        Brand : <span className="underline">{vendor.name}</span>
                       </Link>
                     ) : null
                   )
@@ -166,7 +194,7 @@ const ProductDetails = ({ params }) => {
                 </span>
               </p>
             </div>
-            <div className="buttons">
+            <div className="buttons mx-auto">
               {quantity === 0 ? null : (
                 <button
                   type="button"

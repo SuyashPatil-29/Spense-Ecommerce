@@ -15,7 +15,7 @@ const Cart = () => {
 
   return (
     <div className='cart-wrapper' ref={cartRef}>
-      <div className=' lg:w-[700px] md:w-[550px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-white'>
+      <div className=' lg:w-[700px] md:w-[550px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-slate-900'>
         <button type='button' className='cart-heading' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
           <span className='heading'>Your Cart</span>
@@ -38,7 +38,7 @@ const Cart = () => {
           {cartItems.length >= 1 &&
             cartItems.map((item, index) => {
               return (
-                <div className='product' key={index}>
+                <div className='product bg-white bg-opacity-20 rounded-2xl text-white mx-2 my-3 max-h-[250px]' key={index}>
                   <Image
                     src={urlFor(item.image[0]).url()}
                     className='cart-product-image'
@@ -48,8 +48,8 @@ const Cart = () => {
                   />
                   <div className='item-desc'>
                     <div className='flex top'>
-                      <h5>{item.productName}</h5>
-                      <h4>Rs {item.price}</h4>
+                      <h5 className='text-white'>{item.productName}</h5>
+                      <h4 className='text-white whitespace-nowrap'>Rs {item.price}</h4>
                     </div>
                     <div className='flex bottom'>
                       <div className='flex justify-between w-full my-6 max-w-[55%]'>
@@ -57,7 +57,7 @@ const Cart = () => {
                           <span className='minus mx-auto' onClick={() => toggleCartItemQuanitity(item._key, 'dec')}>
                             <AiOutlineMinus />
                           </span>
-                          <span className='num'>{item.addedQuantity}</span>
+                          <span className='num text-white'>{item.addedQuantity}</span>
                           <span className='plus mx-auto' onClick={() => toggleCartItemQuanitity(item._key, 'inc')}>
                             <AiOutlinePlus />
                           </span>
@@ -77,8 +77,8 @@ const Cart = () => {
             })}
         </div>
         {cartItems.length >= 1 && (
-          <div className='cart-bottom'>
-            <div className='total'>
+          <div className='bg-slate-900 absolute bottom-0 right-[1px] py-8 px-[65px] w-full'>
+            <div className='flex justify-between items-center my-auto text-xl text-white'>
               <h3>Subtotal:</h3>
               <h3>Rs {totalPrice}</h3>
               </div>

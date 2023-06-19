@@ -359,10 +359,7 @@ text-align: end;
 .flex h4{
   font-size: 20px;
 }
-.total{
-  display: flex;
-  justify-content: space-between;
-}
+
 .total h3{
   font-size: 22px;
 
@@ -376,11 +373,10 @@ text-align: end;
 }
 .cart-bottom{
   position: absolute;
-  bottom: 12px;
+  bottom: 0;
   right: 5px;
-width: 100%;
-padding: 30px 65px;
-
+  width: 100%;
+  padding: 30px 65px;
 }
 
 .btn-container{
@@ -697,7 +693,6 @@ margin-top: 160px;
 }
 .flex h5{
   font-size: 16px;
-   color: #324d67;
 }
 .flex h4{
   font-size: 16px;
@@ -707,9 +702,6 @@ margin-top: 160px;
   padding: 30px;
 }
 
-.total h3{
-  font-size: 20px;
-}
 .track {
   animation: marquee 10s linear infinite;
   width: 550%;

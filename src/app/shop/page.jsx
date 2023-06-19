@@ -5,6 +5,18 @@ import ProductDisplay from '../components/ProductDisplay';
 
 const query = `*[_type == "vendor"].products[]`;
 
+export const generateStaticParams = async () => {
+  const slugsData = groq`
+  *[_type == "vendor"].products[]{
+    slug
+  }
+  `;
+
+  const slugs = await client.fetch(slugsData)
+  const slugRoutes = slugs.map((slug) => slug.slug.current)
+  return slugRoutes.map(slug => ({ slug }))
+}
+
 function Shop() {
   const [productArray, setProductArray] = useState([]);
 
