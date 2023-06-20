@@ -1,12 +1,12 @@
 "use client"
 
-import React from 'react'
-import "./styles/globals.css"
-import { Product, Footer, HeroBanner, Cart, Navbar, FooterBanner, ComponentLayout } from './components'
-import { client } from '../../LIB/client'
 import { groq } from 'next-sanity';
-import CategoryHolder from './components/CategoryHolder'
-import BestProductsDisplay from "../app/components/BestProductsDisplay"
+import React from 'react'
+import { client } from '../../../LIB/client';
+import CategoryHolder from '../components/CategoryHolder';
+import { FooterBanner, HeroBanner } from '../components';
+import BestProductsDisplay from '../components/BestProductsDisplay';
+
 
 
 const query = `*[_type == "BestProducts"]`;
@@ -46,7 +46,7 @@ export default async function HomePage (){
 
   return (
     <div>
-    <div className="mb-14">
+    <div className="mb-14 mt-6">
       <div className="categories-container overflow-y-auto flex lg:gap-6 gap-3 justify-start items-center">
         {categories.map((category) => {
           return <CategoryHolder key={category._id} category={category} />;

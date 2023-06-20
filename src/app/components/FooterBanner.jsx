@@ -8,7 +8,7 @@ const FooterBanner = ({footerBanner : {discount, largeText1, largeText2, saleTim
     <div className='lg:py-24 md:py-12 py-12 lg:px-10 md:px-5 rounded-2xl relative lg:h-96 md:h-80 h-60 leading-none text-white w-full mt-32 bg-[#f02d34] bg-opacity-20'>
     <div className='flex justify-between'>
         <div className='max-w-[33.33%]'>
-            <p>{discount}</p>
+            <p>{discount}% OFF</p>
             <h3 className=' lg:text-[80px] md:text-[40px] text-[20px] font-black lg:ml-6 md:ml-4'>{largeText1}</h3>
             <h3>{largeText2}</h3>
             <p className='lg:m-5 md:m-5 mt-5 ml-1'>{saleTime}</p>

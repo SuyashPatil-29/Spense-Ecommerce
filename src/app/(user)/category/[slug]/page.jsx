@@ -1,8 +1,11 @@
 "use client"
 import { groq } from 'next-sanity';
 import React, { useEffect, useState } from 'react';
-import { client } from '../../../../LIB/client';
-import ProductDisplay from '../../components/ProductDisplay';
+
+import BestProductsDisplay from '../../../components/BestProductsDisplay';
+import { client } from '../../../../../LIB/client';
+
+
 
 const productsQuery = groq`
   *[_type == "vendor"].products[]
@@ -65,7 +68,7 @@ const CategoryPage = ({ params }) => {
   return (
     <div>
       {products.map((product) => {
-        return <ProductDisplay product={product} key={product.slug.current} />;
+        return <BestProductsDisplay product={product} key={product.slug.current} />;
       })}
     </div>
   );

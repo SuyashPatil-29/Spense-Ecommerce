@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Toast, toast } from 'react-hot-toast';
 import { useStateContext } from '../../../context/StateContext';
 import { AiOutlineLeft, AiOutlineMinus, AiOutlinePlus, AiOutlineShopping } from 'react-icons/ai';
@@ -7,10 +7,29 @@ import Link from 'next/link';
 import Image from 'next/image';
 import urlFor from '../../../LIB/urlFor';
 import { TiDeleteOutline } from 'react-icons/ti';
+import { groq } from 'next-sanity';
+import { client } from '../../../LIB/client';
+// import getStripe from "../../../LIB/getStripe"
+
+const discountQuery= groq`
+*[_type == "banner"].discount
+`
 
 const Cart = () => {
   const cartRef = useRef();
   const { showCart, setShowCart, cartItems, totalPrice, totalQuantities, toggleCartItemQuanitity, onRemove } = useStateContext();
+  const [discount, setDiscount] = useState([])
+
+  useEffect(() => {
+    const fetchDiscount = async () => {
+      const discountData = await client.fetch(discountQuery);
+      setDiscount(discountData);
+    }
+
+    fetchDiscount();
+  },[])
+
+  console.log(cartItems);
 
   return (
     <div className='cart-wrapper' ref={cartRef}>
@@ -48,7 +67,7 @@ const Cart = () => {
                   <div className='item-desc'>
                     <div className='flex top'>
                       <h5 className='text-white'>{item.productName}</h5>
-                      <h4 className='text-white whitespace-nowrap'>Rs {item.price}</h4>
+                      <h4 className='text-white whitespace-nowrap'>Rs {item.price - (item.price*discount[0]/100)}</h4>
                     </div>
                     <div className='flex bottom'>
                       <div className='flex justify-between w-full my-6 max-w-[55%]'>
@@ -65,7 +84,7 @@ const Cart = () => {
                       <button
                         type='button'
                         className=' text-red-600 text-4xl lg:mr-10 md:mr-10 mr-4'
-                        onClick={() => onRemove(item)}
+                        onClick={()=>console.log("hello")}
                       >
                         <TiDeleteOutline />
                       </button>
@@ -79,11 +98,11 @@ const Cart = () => {
           <div className='bg-slate-900 absolute bottom-0 right-[1px] py-8 px-[65px] w-full'>
             <div className='flex justify-between items-center my-auto text-xl text-white'>
               <h3>Subtotal:</h3>
-              <h3>Rs {totalPrice}</h3>
+              <h3>Rs {totalPrice - (totalPrice*discount[0]/100)}</h3>
               </div>
               <div className='btn-container'>
-                <button type='button' className='btn' onClick={()=>console.log("hello")}>
-                  Pay Now
+                <button type='button' className='btn' onClick={() => setShowCart(false)} onChange={(e)=>{}}>
+                  <Link href="/checkout">Pay Now</Link>
                 </button>
               </div>
             </div>

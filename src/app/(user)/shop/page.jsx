@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { client } from '../../../LIB/client';
-import ProductDisplay from '../components/ProductDisplay';
+import { client } from '../../../../LIB/client';
+import ProductDisplay from '../../components/ProductDisplay';
 
 const query = `*[_type == "vendor"].products[]`;
 

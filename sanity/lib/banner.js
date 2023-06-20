@@ -48,8 +48,8 @@ const Banner = {
         },
         {
             name: 'discount',
-            title: 'Discount',
-            type: 'string',
+            title: 'Discount Percentage',
+            type: 'number',
         },
         {
             name: 'saleTime',

@@ -4,14 +4,18 @@ import { groq } from 'next-sanity';
 import Image from 'next/image';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineStar } from 'react-icons/ai';
 import Link from 'next/link';
-import { client } from '../../../../LIB/client';
-import urlFor from '../../../../LIB/urlFor';
-import { useStateContext } from '../../../../context/StateContext';
-import { Product } from '../../components';
+import { client } from '../../../../../LIB/client';
+import urlFor from '../../../../../LIB/urlFor';
+import { useStateContext } from '../../../../../context/StateContext';
+import { Product } from '../../../components';
 
 const products = groq`
   *[_type == "vendor"].products[]
 `;
+
+const discountQuery= groq`
+*[_type == "banner"].discount
+`
 
 const vendorQuery = groq`
   *[_type == "vendor"]{
@@ -45,6 +49,7 @@ const ProductDetails = ({ params }) => {
   const [vendor, setVendor] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [slugReturned, setSlug] = useState([])
+  const [discount, setDiscount] = useState([])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,9 +67,15 @@ const ProductDetails = ({ params }) => {
       setVendor(vendorData);
     };
 
+    const fetchDiscount = async () => {
+      const discountData = await client.fetch(discountQuery);
+      setDiscount(discountData);
+    }
+
     fetchProducts();
     fetchVendor();
     fetchSlugsData();
+    fetchDiscount();
   }, []);
 
 
@@ -152,7 +163,15 @@ const ProductDetails = ({ params }) => {
             </h4>
             <p className="max-w-3xl">{details}</p>
             <p className="price mt-6 text-lg font-bold text-pink-400">
-              Price : <span className="text-slate-200">Rs{price}</span>
+              {discount[0] ? (
+                <span className="text-lg font-bold text-pink-400">
+                  Price : <span className="line-through text-red-500 mr-4"><span className='text-slate-200'>Rs {price}</span></span><span className="text-slate-200">Rs {price - (price * discount[0]/100)}</span>
+                </span>
+               ) :
+                <span className="text-lg font-bold text-pink-400">
+                  Price : <span className="text-slate-200">Rs{price}</span>
+                </span>
+              }
             </p>
             <div className="flex justify-between items-center lg:min-w-[55vw]">
               {quantity === 0 ? (

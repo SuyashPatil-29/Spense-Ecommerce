@@ -1,7 +1,7 @@
 import React from 'react'
-import { client } from '../../../LIB/client'
+import { client } from '../../../../LIB/client'
 import { groq } from 'next-sanity';
-import VendorDisplay from '../components/VendorDisplay';
+import VendorDisplay from '../../components/VendorDisplay';
 
 const vendorsQuery = groq`
   *[_type == "vendor"]
