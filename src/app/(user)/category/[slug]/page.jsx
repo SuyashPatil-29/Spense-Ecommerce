@@ -2,7 +2,7 @@
 import { groq } from 'next-sanity';
 import React, { useEffect, useState } from 'react';
 
-import BestProductsDisplay from '../../../components/BestProductsDisplay';
+import ProductDisplay from '../../../components/ProductDisplay';
 import { client } from '../../../../../LIB/client';
 
 
@@ -68,7 +68,7 @@ const CategoryPage = ({ params }) => {
   return (
     <div>
       {products.map((product) => {
-        return <BestProductsDisplay product={product} key={product.slug.current} />;
+        return <ProductDisplay product={product} key={product.slug.current} />;
       })}
     </div>
   );

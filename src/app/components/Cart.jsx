@@ -29,7 +29,6 @@ const Cart = () => {
     fetchDiscount();
   },[])
 
-  console.log(cartItems);
 
   return (
     <div className='cart-wrapper' ref={cartRef}>
@@ -84,7 +83,7 @@ const Cart = () => {
                       <button
                         type='button'
                         className=' text-red-600 text-4xl lg:mr-10 md:mr-10 mr-4'
-                        onClick={()=>console.log("hello")}
+                        onClick={() => onRemove(item)}
                       >
                         <TiDeleteOutline />
                       </button>

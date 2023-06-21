@@ -2,8 +2,9 @@
 import { Toaster } from 'react-hot-toast'
 import "../styles/globals.css"
 import { Inter } from 'next/font/google'
-import { Footer, Navbar } from '../components'
+
 import { StateContext } from '../../../context/StateContext'
+import { Footer, Navbar } from '../components'
 
 const inter = Inter({ subsets: ['latin'] })
 
