@@ -66,7 +66,7 @@ const Cart = () => {
                   <div className='item-desc'>
                     <div className='flex top'>
                       <h5 className='text-white'>{item.productName}</h5>
-                      <h4 className='text-white whitespace-nowrap'>Rs {item.price - (item.price*discount[0]/100)}</h4>
+                      <h4 className='text-white whitespace-nowrap'>Rs {Math.floor(item.price - (item.price*discount[0]/100))*item.addedQuantity}</h4>
                     </div>
                     <div className='flex bottom'>
                       <div className='flex justify-between w-full my-6 max-w-[55%]'>
@@ -97,7 +97,7 @@ const Cart = () => {
           <div className='bg-slate-900 absolute bottom-0 right-[1px] py-8 px-[65px] w-full'>
             <div className='flex justify-between items-center my-auto text-xl text-white'>
               <h3>Subtotal:</h3>
-              <h3>Rs {totalPrice - (totalPrice*discount[0]/100)}</h3>
+              <h3>Rs {Math.floor(totalPrice - (totalPrice*discount[0]/100))}</h3>
               </div>
               <div className='btn-container'>
                 <button type='button' className='btn' onClick={() => setShowCart(false)} onChange={(e)=>{}}>

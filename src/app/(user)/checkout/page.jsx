@@ -6,18 +6,29 @@ import { useStateContext } from '../../../../context/StateContext.js';
 import urlFor from '../../../../LIB/urlFor';
 import Link from 'next/link.js';
 import { groq } from 'next-sanity';
+import CardDiscountComponent from "../../components/CardDiscountComponent.jsx"
 import { client } from '../../../../LIB/client.js';
 
 const discountQuery= groq`
 *[_type == "banner"].discount
 `
+
+const cardsQuery = groq`
+*[_type == "cards"]{
+  cardName,
+  discount
+}
+`
+
 const paymentSuccess = ()=>{
   toast.success("Payment Successful")
 }
 
 const Page = () => {
-  const { cartItems, qty, totalPrice } = useStateContext();
+  const { cartItems, totalPrice, cardDiscount } = useStateContext();
+
   const [discount, setDiscount] = useState([])
+  const [cards, setCards] = useState([])
 
   useEffect(() => {
     const fetchDiscount = async () => {
@@ -25,13 +36,23 @@ const Page = () => {
       setDiscount(discountData);
     }
     fetchDiscount();
+
+    const fetchCard = async () =>{
+      const cardData = await client.fetch(cardsQuery);
+      setCards(cardData);
+    }
+    fetchCard();
   },[])
+
+  console.log(cardDiscount);
 
   const discountedPrice = Math.floor(totalPrice - (totalPrice * discount[0] / 100));
 
   // Check if discountedPrice is NaN
   const formattedDiscountedPrice = isNaN(discountedPrice) ? 'N/A' : Math.floor(discountedPrice);
 
+  const cardDiscountPrice = Math.floor(formattedDiscountedPrice * cardDiscount / 100);
+  const formattedCardDiscountPrice = isNaN(cardDiscountPrice) ? 'N/A' : Math.floor(cardDiscountPrice);
 
   return (
     <div className=' bg-white bg-opacity-40 py-14 lg:mx-10 my-10 rounded-2xl border-2 border-black'>
@@ -62,7 +83,7 @@ const Page = () => {
                       <p className="font-semibold text-lg float-right">Rs {item.price}</p>
                     )
                     }
-                    <span className='float-left text-white'>Qty : {item.addedQuantity}</span>
+                    <span className='float-left text-black'>Qty : {item.addedQuantity}</span>
                 </div>
                 <p className="text-lg font-bold">Total Price: Rs {Math.floor((item.price-(item.price*discount[0]/100))*item.addedQuantity)}</p>
               </div>
@@ -75,50 +96,34 @@ const Page = () => {
         </div>
         <div className=" p-8 rounded-2xl">
           <div className="flex flex-col rounded-lg p-4">
-            <p className="text-lg font-medium">Order Summary</p>
+            <p className="text-lg font-medium">Cart Summary</p>
             <div className="mt-4 flex justify-between">
               <p className="text-white text-lg">Subtotal</p>
-              <p className="font-semibold text-lg">Rs {formattedDiscountedPrice}</p>
+              <p className="text-lg font-semibold">Rs {formattedDiscountedPrice}</p>
             </div>
             <div className="mt-2 flex justify-between">
               <p className="text-white text-lg">Card Discount</p>
-              <p className="font-semibold text-lg">Rs 0</p>
+              <p className="font-semibold text-lg">- Rs {formattedCardDiscountPrice}</p>
             </div>
             <div className="border-t border-black mt-4 pt-4 flex justify-between">
               <p className="text-lg font-medium">Total</p>
-              <p className="text-lg font-bold">Rs {formattedDiscountedPrice}</p>
+              {cardDiscount ? (
+                <div className='flex gap-6'>
+                  <p className="font-bold text-lg line-through">Rs {formattedDiscountedPrice}</p>
+                  <p className="font-bold text-lg">Rs {(formattedDiscountedPrice - formattedCardDiscountPrice)}</p>
+                </div>
+              ) :
+              <p className="font-bold text-lg">Rs {formattedDiscountedPrice}</p>
+              }
             </div>
           </div>
-        <p className="mt-8 text-lg font-medium">Select Card</p>
+        <p className="mt-8 text-lg font-medium">Pay With A Card to Avail Exciting Offers</p>
           <form className="mt-5 grid gap-6">
-            <div className="relative">
-              <input className="peer hidden" id="radio_1" type="radio" name="radio" checked onChange={()=>{}}/>
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-slate-200"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_1"
-              >
-                {/* <img className="w-14 object-contain" src="/images/naorr.                .png" alt="Shipping Method 1" /> */}
-                <div className="ml-4">
-                  <p className="font-semibold">Standard Shipping</p>
-                  <p className="text-gray-400">$5.99</p>
-                </div>
-              </label>
-            </div>
-            <div className="relative">
-              <input className="peer hidden" id="radio_2" type="radio" name="radio" />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-slate-200"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_2"
-              >
-                {/* <img className="w-14 object-contain" src="/images/naorr.png" alt="Shipping Method 2" /> */}
-                <div className="ml-4">
-                  <p className="font-semibold">Express Shipping</p>
-                  <p className="text-gray-400">$12.99</p>
-                </div>
-              </label>
-            </div>
+            {cards.map((card, index) => {
+              return(
+                <CardDiscountComponent key={index} index={index} card={card} />
+              )
+            })}
           </form>
           <div className="flex justify-end mt-8 bottom-3 right-[135px]">
             <button onClick={paymentSuccess} className="bg-blue-500 w-full place-content-center hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">

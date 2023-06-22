@@ -165,7 +165,7 @@ const ProductDetails = ({ params }) => {
             <p className="price mt-6 text-lg font-bold text-pink-400">
               {discount[0] ? (
                 <span className="text-lg font-bold text-pink-400">
-                  Price : <span className="line-through text-red-500 mr-4"><span className='text-red-500'>Rs {price}</span></span><span className="text-slate-200">Rs {price - (price * discount[0]/100)}</span>
+                  Price : <span className="line-through text-red-500 mr-4"><span className='text-red-500'>Rs {price}</span></span><span className="text-slate-200">Rs {Math.floor(price - (price * discount[0]/100))}</span>
                 </span>
                ) :
                 <span className="text-lg font-bold text-pink-400">

@@ -1,5 +1,3 @@
-import Category from "./category";
-
 const Vendor = {
   name: 'vendor',
   title: 'Vendor',
