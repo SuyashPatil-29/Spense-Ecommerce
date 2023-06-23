@@ -19,7 +19,7 @@ const CardDiscountComponent = ({card, index}) => {
                   >
                     {/* <img className="w-14 object-contain" src="/images/naorr.                .png" alt="Shipping Method 1" /> */}
                     <div className="ml-4">
-                      <p className="font-semibold">{card.cardName}</p>
+                      <p className="font-semibold text-black">{card.cardName}</p>
                       <p className="text-gray-800">{card.discount}% off</p>
                     </div>
                   </label>

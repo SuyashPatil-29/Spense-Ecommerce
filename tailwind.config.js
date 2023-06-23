@@ -14,28 +14,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    function ({ addUtilities }) {
-      addUtilities({
-        '.categoryMarquee': {
-          animation: 'marquee 5s linear infinite',
-          'animation-direction': 'reverse',
-        },
-        '@keyframes categoryMarquee': {
-          "0%" : {
-            transform: "translateX(0%)"
-          },
-          "100%" : {
-            transform: "translateX(100%)"
-          },
-          "100%" : {
-            transform: "translateX(-100%)"
-          },
-          "0%" : {
-            transform: "translateX(0%)"
-          },
-      }
-    })
-  }
-  ],
+  plugins: [require("daisyui")],
 }

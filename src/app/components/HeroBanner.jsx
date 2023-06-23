@@ -9,8 +9,8 @@ const HeroBanner = ({heroBanner}) => {
     <div className="p-[100px] sm:p-[40px] rounded-[15px] h-[500px] leading-tight w-full bg-slate-300 bg-opacity-40 flex-row relative mx-auto">
       <div className='flex justify-around items-center lg:gap-0 md:gap-0 gap-8'>
       <div className='max-w-1/2'>
-        <p className="text-xl">{heroBanner.smallText}</p>
-        <h3 className='lg:text-[4rem] md:text-[4rem] text-[2rem] mt-[4px] font-semibold'>{heroBanner.midText}</h3>
+        <p className="text-xl text-black">{heroBanner.smallText}</p>
+        <h3 className='lg:text-[4rem] md:text-[4rem] text-[2rem] mt-[4px] font-semibold text-black'>{heroBanner.midText}</h3>
         <h1 className=' text-white lg:text-9xl md:text-9xl text-5xl lg:-ml-5 md:-ml-5 uppercase'>{heroBanner.largeText1}</h1>
       </div>
         <Image src={urlFor(heroBanner.image).url()} alt='headphones' className={`lg:block transform max-w-1/2 -rotate-6 transition hover:scale-105 duration-700 ease-in-out hover:rotate-12`} width={450} height={450} priority/>

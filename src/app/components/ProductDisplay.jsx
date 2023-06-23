@@ -45,7 +45,7 @@ function ProductDisplay({product}) {
               <Image src={urlFor(product.image[index]).url()} alt="Product Image" className=" lg:max-h-[250px] lg:max-w-[250px] rounded-2xl md:max-h-[250px] md:max-w-[250px] object-cover w-full max-h-[180px] min-h-[120px]" width="0" height="0" sizes='100vw' priority style={{objectFit: 'cover', objectPosition: 'center'}}/>
             </div>
             <div className="ml-8 mr-12 lg:w-3/5 md:w-3/5 w-1/2 lg:block md:block hidden">
-              <h2 className=" text-2xl font-semibold">{product.productName}</h2>
+              <h2 className=" text-2xl font-semibold text-black">{product.productName}</h2>
               <p className="text-lg text-white font-semibold">Rs {product.price}</p>
               <p className="text-md text-gray-200 mt-2 mr-3 lg:block hidden md:block">
                 {`${product.details.substr(0, 150).replace(/\n/g, " ")}...`}
@@ -53,7 +53,7 @@ function ProductDisplay({product}) {
               <p>{}</p>
             </div>
             <div className='lg:hidden md:hidden block mx-4'>
-                <h2 className="text-lg font-semibold">{product.productName}</h2>
+                <h2 className="text-lg font-semibold text-black">{product.productName}</h2>
                 <p className="text-lg text-white font-semibold">Rs {product.price}</p>
             </div>
             </div>
