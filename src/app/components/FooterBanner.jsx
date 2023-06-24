@@ -9,8 +9,8 @@ const FooterBanner = ({footerBanner : {discount, largeText1, largeText2, saleTim
     <div className='flex justify-between'>
         <div className='max-w-[33.33%]'>
             <p>{discount}% OFF</p>
-            <h3 className=' lg:text-[80px] md:text-[40px] text-[20px] font-black lg:ml-6 md:ml-4'>{largeText1}</h3>
-            <h3>{largeText2}</h3>
+            <p className=' lg:text-[80px] md:text-[40px] text-[20px] font-black lg:ml-6 md:ml-4'>{largeText1}</p>
+            <p>{largeText2}</p>
             <p className='lg:m-5 md:m-5 mt-5 ml-1'>{saleTime}</p>
         </div>
         <div className='max-w-[33.33%]'>
@@ -18,7 +18,7 @@ const FooterBanner = ({footerBanner : {discount, largeText1, largeText2, saleTim
         </div>
         <div className='max-w-[33.33%]'>
             <p className='lg:text-lg md:text-base text-sm'>{smallText}</p>
-            <h3 className=' font-extrabold lg:text-6xl md:text-4xl text-2xl'>{midText}</h3>
+            <p className=' font-extrabold lg:text-6xl md:text-4xl text-2xl'>{midText}</p>
             <p className='lg:text-lg md:text-base text-sm'>{desc}</p>
             <Link href={`/shop`}>
                 <button className=' rounded-2xl py-2 px-4 bg-white text-red-600 border-none lg:mt-10 md:mt-8 mt-6 md:inset-auto md:bottom-auto md:left-auto md:right-auto lg:inset-auto lg:bottom-auto lg:left-auto lg:right-auto absolute left-3 bottom-7 text-base font-semibold cursor-pointer shadow-2xl shadow-black hover:opacity-80 hover:scale-110 transition duration-300 ease-in-out' type='button'>{buttonText}</button>

@@ -31,8 +31,8 @@ const Cart = () => {
 
 
   return (
-    <div className='cart-wrapper max-h-[100vh] overflow-y-auto' ref={cartRef}>
-      <div className=' lg:w-[700px] md:w-[550px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-slate-900'>
+    <div className='cart-wrapper overflow-x-hidden overflow-y-auto' ref={cartRef}>
+      <div className=' lg:w-[700px] md:w-[550px] w-[325px] relative max-h-screen min-h-screen float-right mx-0 py-[40px] px-[10px] bg-slate-900'>
         <button type='button' className='cart-heading text-white' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
           <span className='heading text-white'>Your Cart</span>
@@ -44,7 +44,7 @@ const Cart = () => {
             <AiOutlineShopping size={150} className='mx-auto' />
             <h3 className='text-white'>Your cart is empty</h3>
             <Link href='/shop'>
-              <button type='button' className='btn hover:bg-red-500' onClick={() => setShowCart(false)}>
+              <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[225px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>
                 Continue Shopping
               </button>
             </Link>
@@ -95,13 +95,13 @@ const Cart = () => {
         </div>
         {cartItems.length >= 1 && (
           <div className='bg-slate-900 absolute bottom-0 right-[1px] py-8 px-[65px] w-full'>
-            <div className='flex justify-between items-center my-auto text-xl text-white'>
+            <div className='flex justify-between items-center my-auto text-xl text-white mb-3'>
               <h3>Subtotal:</h3>
               <h3>Rs {Math.floor(totalPrice - (totalPrice*discount[0]/100))}</h3>
-              </div>
+            </div>
               <div className='btn-container'>                
                 <Link href="/checkout">
-                  <button type='button' className='btn hover:bg-red-500 text-white' onClick={() => setShowCart(false)}>Pay Now</button>
+                  <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[225px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>Pay Now</button>
                 </Link>
               </div>
             </div>

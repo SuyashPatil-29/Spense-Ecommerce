@@ -467,7 +467,6 @@ text-align: end;
 }
 .buttons{
   display: flex;
-  gap: 30px;
 }
 .buttons .add-to-cart{
   padding: 10px 20px;
