@@ -31,7 +31,7 @@ const Cart = () => {
 
 
   return (
-    <div className='cart-wrapper' ref={cartRef}>
+    <div className='cart-wrapper max-h-[100vh] overflow-y-auto' ref={cartRef}>
       <div className=' lg:w-[700px] md:w-[550px] w-[350px] relative float-right h-screen py-[40px] px-[10px] bg-slate-900'>
         <button type='button' className='cart-heading text-white' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
@@ -44,7 +44,7 @@ const Cart = () => {
             <AiOutlineShopping size={150} className='mx-auto' />
             <h3 className='text-white'>Your cart is empty</h3>
             <Link href='/shop'>
-              <button type='button' className='btn' onClick={() => setShowCart(false)}>
+              <button type='button' className='btn hover:bg-red-500' onClick={() => setShowCart(false)}>
                 Continue Shopping
               </button>
             </Link>
@@ -99,10 +99,10 @@ const Cart = () => {
               <h3>Subtotal:</h3>
               <h3>Rs {Math.floor(totalPrice - (totalPrice*discount[0]/100))}</h3>
               </div>
-              <div className='btn-container'>
-                <button type='button' className='btn' onClick={() => setShowCart(false)} onChange={(e)=>{}}>
-                  <Link href="/checkout">Pay Now</Link>
-                </button>
+              <div className='btn-container'>                
+                <Link href="/checkout">
+                  <button type='button' className='btn hover:bg-red-500 text-white' onClick={() => setShowCart(false)}>Pay Now</button>
+                </Link>
               </div>
             </div>
         )}

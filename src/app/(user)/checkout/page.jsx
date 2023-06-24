@@ -44,8 +44,6 @@ const Page = () => {
     fetchCard();
   },[])
 
-  console.log(cardDiscount);
-
   const discountedPrice = Math.floor(totalPrice - (totalPrice * discount[0] / 100));
 
   // Check if discountedPrice is NaN
@@ -107,13 +105,13 @@ const Page = () => {
             </div>
             <div className="border-t border-black mt-4 pt-4 flex justify-between">
               <p className="text-lg text-black font-medium">Total</p>
-              {cardDiscount ? (
+              {cardDiscount && cartItems.length > 0 ? (
                 <div className='flex gap-6'>
                   <p className="font-bold text-lg text-black line-through">Rs {formattedDiscountedPrice}</p>
                   <p className="font-bold text-black text-lg">Rs {(formattedDiscountedPrice - formattedCardDiscountPrice)}</p>
                 </div>
               ) :
-              <p className="font-bold text-lg">Rs {formattedDiscountedPrice}</p>
+              <p className="font-bold text-lg text-black">Rs {formattedDiscountedPrice}</p>
               }
             </div>
           </div>
