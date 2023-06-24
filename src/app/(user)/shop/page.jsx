@@ -61,7 +61,7 @@ function Shop({searchParams}) {
   }
 
   return (
-    <div className='my-9 lg:mx-16 mx-auto max-h-screen'>
+    <div className='my-9 lg:mx-16 mx-auto min-h-screen'>
       {pageProductsArray.map((product) => (
         <ProductDisplay key={product.slug.current} product={product}/>
       ))}

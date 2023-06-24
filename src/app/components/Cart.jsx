@@ -32,7 +32,7 @@ const Cart = () => {
 
   return (
     <div className='cart-wrapper overflow-x-hidden overflow-y-auto' ref={cartRef}>
-      <div className=' lg:w-[700px] md:w-[550px] w-[325px] relative max-h-screen min-h-screen float-right mx-0 py-[40px] px-[10px] bg-slate-900'>
+      <div className=' lg:w-[700px] md:w-[550px] w-[325px] relative max-h-screen min-h-screen float-right mx-0 lg:py-[40px] md:py-[40px] px-[10px] bg-slate-900'>
         <button type='button' className='cart-heading text-white' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
           <span className='heading text-white'>Your Cart</span>
@@ -44,7 +44,7 @@ const Cart = () => {
             <AiOutlineShopping size={150} className='mx-auto' />
             <h3 className='text-white'>Your cart is empty</h3>
             <Link href='/shop'>
-              <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[225px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>
+              <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[250px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>
                 Continue Shopping
               </button>
             </Link>
@@ -66,10 +66,10 @@ const Cart = () => {
                   <div className='item-desc'>
                     <div className='flex top'>
                       <h5 className='text-white'>{item.productName}</h5>
-                      <h4 className='text-white whitespace-nowrap'>Rs {Math.floor(item.price - (item.price*discount[0]/100))*item.addedQuantity}</h4>
+                      <p className='text-white whitespace-nowrap'>Rs {Math.floor(item.price - (item.price*discount[0]/100))*item.addedQuantity}</p>
                     </div>
-                    <div className='flex bottom'>
-                      <div className='flex justify-between w-full my-6 max-w-[55%]'>
+                    <div className='flex bottom justify-between'>
+                      <div className='flex justify-between w-full my-6 lg:max-w-[55%] md:max-w-[55%] max-w-[85%] lg:ml-0 md:ml-0 -ml-16'>
                         <p className='quantity-desc flex items-center justify-between'>
                           <span className='minus mx-auto' onClick={() => toggleCartItemQuanitity(item._key, 'dec')}>
                             <AiOutlineMinus />
@@ -94,14 +94,14 @@ const Cart = () => {
             })}
         </div>
         {cartItems.length >= 1 && (
-          <div className='bg-slate-900 absolute bottom-0 right-[1px] py-8 px-[65px] w-full'>
+          <div className='bg-slate-900 absolute bottom-0 right-[1px] py-8 px-[35px] w-full'>
             <div className='flex justify-between items-center my-auto text-xl text-white mb-3'>
               <h3>Subtotal:</h3>
               <h3>Rs {Math.floor(totalPrice - (totalPrice*discount[0]/100))}</h3>
             </div>
               <div className='btn-container'>                
                 <Link href="/checkout">
-                  <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[225px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>Pay Now</button>
+                  <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[250px] bg-red-600 py-4 rounded-2xl hover:scale-105 mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>Pay Now</button>
                 </Link>
               </div>
             </div>
