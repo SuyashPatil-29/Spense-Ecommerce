@@ -72,6 +72,7 @@ width: 100%;
     margin-left: 6px;
 }
 .cart-icon{
+  color: #fff;
   font-size: 25px;
   cursor: pointer;
   position: relative;

@@ -212,7 +212,7 @@ const ProductDetails = ({ params }) => {
                 </span>
               </p>
             </div>
-            <div className="buttons lg:gap-7 md:gap-7 gap-4 mx-auto">
+            <div className="buttons lg:gap-7 md:gap-7 gap-5 mx-auto">
               {quantity === 0 ? null : (
                 <button
                   type="button"
