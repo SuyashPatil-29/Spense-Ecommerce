@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
 import "../styles/globals.css";
@@ -14,20 +14,23 @@ const Navbar = () => {
   const [user] = useAuthState(auth);
   const { push } = useRouter();
 
-  const viewAsGuest = (e) => {
-    e.preventDefault();
-    setIsGuest(true);
-    push("/");
-  }
+  const handleViewAsGuest = () => {
+    setIsGuest(prevIsGuest => !prevIsGuest); // Toggle isGuest value
+    if (isGuest) {
+      push("/login");
+    } else {
+      push("/");
+    }
+  };
 
-  const navigateTo = () => {
+  const handleLogin = () => {
     if (isGuest) {
       push("/login");
     } else {
       auth.signOut();
       push("/login");
     }
-  }
+  };
 
   return (
     <div className={`flex justify-between fixed w-full z-[99999] bg-transparent top-3 ml-2`}>
@@ -36,28 +39,40 @@ const Navbar = () => {
       </Link>
       <div className='flex items-center justify-between lg:gap-x-12 md:gap-x-10 gap-x-3 lg:mr-16 md:mr-16 mr-9'>
 
-        {user ?
-          (
-            <div className='flex justify-between lg:gap-x-12 md:gap-x-10 gap-x-3'>
-              <Link href="/shop?page=1" className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>Shop</Link>
-              <Link href="/vendors" className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>Store</Link>
-            </div>
-          )
-          :
-          null
-        }
-
-        <button className={`relative lg:text-xl md:text-2xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}
-          onClick={!user ? viewAsGuest : navigateTo}>
-          {!user ? (isGuest ? "Login" : "View as Guest") : "Logout"}
-        </button>
-
         {user ? (
-          <button type='button' className='cart-icon' onClick={() => { setShowCart(true) }}>
+          <div className='flex justify-between lg:gap-x-12 md:gap-x-10 gap-x-3'>
+            <Link href="/shop?page=1" className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>
+              Shop
+            </Link>
+            <Link href="/vendors" className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>
+              Store
+            </Link>
+          </div>
+        ) : null}
+
+        <div>
+          {user ? (
+            <button onClick={handleLogin} className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>
+              Logout</button>
+          ) : (
+            <button onClick={handleViewAsGuest} className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>
+              {isGuest ? "Login" : "View as Guest"}
+            </button>
+          )}
+        </div>
+
+        {user && (
+          <button
+            type='button'
+            className='cart-icon'
+            onClick={() => {
+              setShowCart(true);
+            }}
+          >
             <AiOutlineShopping />
             <span className='cart-item-qty bottom-4 relative'>{totalQuantities.toString()}</span>
           </button>
-        ) : null}
+        )}
 
         {showCart && <Cart />}
       </div>

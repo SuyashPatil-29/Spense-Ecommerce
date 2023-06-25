@@ -8,7 +8,6 @@ import { FooterBanner, HeroBanner } from '../components';
 import BestProductsDisplay from '../components/BestProductsDisplay';
 
 
-
 const query = `*[_type == "BestProducts"]`;
 
 const bannerQuery = groq`
@@ -19,10 +18,6 @@ const bannerQuery = groq`
 
 const categoryData = groq`
 *[_type == "category"]
-`;
-
-const vendorQuery = groq`
-*[_type == "vendor"]
 `;
 
 export const generateStaticParams = async () => {
@@ -42,7 +37,6 @@ export default async function HomePage (){
   const bestProducts = await client.fetch(query);
   const bannerData = await client.fetch(bannerQuery);
   const categories = await client.fetch(categoryData);
-  const vendorsData = await client.fetch(vendorQuery);
 
   return (
     <div>
