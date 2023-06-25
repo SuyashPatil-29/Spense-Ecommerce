@@ -15,6 +15,7 @@ export const StateContext = ({ children }) => {
   const [cardDiscount, setCardDiscount] = useState(0);
 
   let foundProduct;
+  let index;
 
   const onAdd = (product, addedQuantity) => {
     const checkProductInCart = cartItems.find((item) => item._key === product._key);
