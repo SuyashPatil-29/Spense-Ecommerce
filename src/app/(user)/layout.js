@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-w-[100vw] min-h-screen`} style={{backgroundImage: 'url(/header.webp)' , backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundColor: '#fff'}}>
+      <body className={`${inter.className} min-w-[100vw] min-h-screen`} style={{backgroundImage: 'url(/header.webp)' , backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundAttachment: 'fixed'}}>
       <StateContext>
       <Toaster />
       <div className='layout'>

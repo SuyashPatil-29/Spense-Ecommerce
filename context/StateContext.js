@@ -6,10 +6,6 @@ import { client } from "../LIB/client";
 
 const Context = createContext();
 
-const discountQuery = groq`
-  *[_type == "banner"].discount
-`;
-
 export const StateContext = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -19,12 +15,10 @@ export const StateContext = ({ children }) => {
   const [cardDiscount, setCardDiscount] = useState(0);
 
   let foundProduct;
-  let index;
 
-  
   const onAdd = (product, addedQuantity) => {
     const checkProductInCart = cartItems.find((item) => item._key === product._key);
-    
+
     setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * addedQuantity);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + addedQuantity);
     setCartItems((prevCartItems) => {
@@ -45,7 +39,7 @@ export const StateContext = ({ children }) => {
     });
     toast.success(`${addedQuantity} ${product.productName} added to the cart.`);
   };
-  
+
   const onRemove = (product) => {
     foundProduct = cartItems.find((item) => item._key === product._key);
     const newCartItems = cartItems.filter((item) => item._key !== product._key);
@@ -54,7 +48,7 @@ export const StateContext = ({ children }) => {
     setCartItems(newCartItems);
     toast.success(`${foundProduct.productName} removed from the cart.`);
   };
-  
+
   const toggleCartItemQuanitity = (_key, value) => {
     foundProduct = cartItems.find((item) => item._key === _key);
     index = cartItems.findIndex((product) => product._key === _key);
@@ -63,7 +57,7 @@ export const StateContext = ({ children }) => {
       if (foundProduct.addedQuantity < foundProduct.quantity) {
         setCartItems((cartItems) =>
           cartItems.map((item) =>
-          item._key === _key ? { ...foundProduct, addedQuantity: foundProduct.addedQuantity + 1 } : item
+            item._key === _key ? { ...foundProduct, addedQuantity: foundProduct.addedQuantity + 1 } : item
           )
         );
         setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
@@ -74,51 +68,87 @@ export const StateContext = ({ children }) => {
     } else if (value === "dec") {
       if (foundProduct.addedQuantity > 1) {
         setCartItems((cartItems) =>
-        cartItems.map((item) =>
-        item._key === _key ? { ...foundProduct, addedQuantity: foundProduct.addedQuantity - 1 } : item
-        )
+          cartItems.map((item) =>
+            item._key === _key ? { ...foundProduct, addedQuantity: foundProduct.addedQuantity - 1 } : item
+          )
         );
         setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
+      } else {
+        onRemove(foundProduct);
       }
     }
   };
-  
-  const incQty = () => {
-    setQty((prevQty) => prevQty + 1);
+
+  const handleDiscountChange = (discountValue) => {
+    setCardDiscount(discountValue);
   };
 
-  const decQty = () => {
-    setQty((prevQty) => {
-      if (prevQty - 1 < 1) return 1;
+  useEffect(() => {
+    // Load cartItems from local storage
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
 
-      return prevQty - 1;
-    });
+    // Load totalPrice from local storage
+    const storedTotalPrice = localStorage.getItem("totalPrice");
+    if (storedTotalPrice) {
+      setTotalPrice(parseFloat(storedTotalPrice));
+    }
+
+    // Load totalQuantities from local storage
+    const storedTotalQuantities = localStorage.getItem("totalQuantities");
+    if (storedTotalQuantities) {
+      setTotalQuantities(parseInt(storedTotalQuantities));
+    }
+
+    // Load qty from local storage
+    const storedQty = localStorage.getItem("qty");
+    if (storedQty) {
+      setQty(parseInt(storedQty));
+    }
+
+    // Load showCart from local storage
+    const storedShowCart = localStorage.getItem("showCart");
+    if (storedShowCart) {
+      setShowCart(storedShowCart === "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save cartItems to local storage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    // Save totalPrice to local storage
+    localStorage.setItem("totalPrice", totalPrice.toString());
+
+    // Save totalQuantities to local storage
+    localStorage.setItem("totalQuantities", totalQuantities.toString());
+
+    // Save qty to local storage
+    localStorage.setItem("qty", qty.toString());
+
+    // Save showCart to local storage
+    localStorage.setItem("showCart", showCart.toString());
+  }, [cartItems, totalPrice, totalQuantities, qty, showCart]);
+
+  const value = {
+    showCart,
+    setShowCart,
+    cartItems,
+    totalPrice,
+    totalQuantities,
+    qty,
+    cardDiscount,
+    onAdd,
+    onRemove,
+    toggleCartItemQuanitity,
+    setQty,
+    handleDiscountChange,
   };
 
-  return (
-    <Context.Provider
-      value={{
-        showCart,
-        cartItems,
-        totalPrice,
-        totalQuantities,
-        qty,
-        incQty,
-        decQty,
-        onAdd,
-        setShowCart,
-        setQty,
-        toggleCartItemQuanitity,
-        onRemove,
-        setTotalPrice,
-        cardDiscount,
-        setCardDiscount
-      }}
-    >
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const useStateContext = () => useContext(Context);

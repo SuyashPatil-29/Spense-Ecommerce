@@ -3,9 +3,9 @@ import { useStateContext } from '../../../context/StateContext'
 
 
 const CardDiscountComponent = ({card, index}) => {
-    const { setCardDiscount } = useStateContext();
+    const { handleDiscountChange } = useStateContext();
   return (
-    <div key={card.cardName} className="relative" onChange={()=>setCardDiscount(card.discount)}>
+    <div key={card.cardName} className="relative" onChange={()=>handleDiscountChange(card.discount)}>
                   <input
                     className="peer hidden"
                     id={`radio_${index + 1}`}
