@@ -8,10 +8,9 @@ const FooterBanner = ({footerBanner : {discount, largeText1, largeText2, saleTim
     <div className='lg:py-24 md:py-12 py-12 lg:px-10 md:px-5 rounded-2xl relative lg:h-96 md:h-80 h-60 leading-none text-white w-full mt-32 bg-[#f02d34] bg-opacity-20'>
     <div className='flex justify-between'>
         <div className='max-w-[33.33%]'>
-            <p>{discount}% OFF</p>
-            <p className=' lg:text-[80px] md:text-[40px] text-[20px] font-black lg:ml-6 md:ml-4'>{largeText1}</p>
-            <p>{largeText2}</p>
-            <p className='lg:m-5 md:m-5 mt-5 ml-1'>{saleTime}</p>
+            <p className='text-[30px] pb-7'>{discount}% OFF</p>
+            <p className=' lg:text-[40px] md:text-[40px] text-[20px] font-black'>{saleTime}</p>
+            <p className='lg:m-5 md:m-5 mt-5 ml-1'></p>
         </div>
         <div className='max-w-[33.33%]'>
             <Image src={urlFor(image).url()} width={500} height={500} className='absolute lg:left-[25%] lg:-top-[25%] md:-top-[25%] -top-[18%] left-[25%] rounded-2xl lg:h-[500px] lg:w-[500px] md:h-[400px] md:w-[400px] h-[150px] w-[150px]' alt='footerBanner' />

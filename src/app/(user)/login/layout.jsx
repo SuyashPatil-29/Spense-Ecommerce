@@ -8,5 +8,5 @@ export const metadata = {
   export default function BlogsLayout({
       children,
     }) {
-      return <section className=" min-h-[70vh]">{children}</section>;
+      return <section className=" min-h-[50vh] bg-black rounded-2xl">{children}</section>;
     }

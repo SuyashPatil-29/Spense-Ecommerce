@@ -13,6 +13,7 @@ export const StateContext = ({ children }) => {
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
   const [cardDiscount, setCardDiscount] = useState(0);
+  const [isGuest, setIsGuest] = useState(false);
 
   let foundProduct;
   let index;
@@ -92,6 +93,11 @@ export const StateContext = ({ children }) => {
       setCartItems(JSON.parse(storedCartItems));
     }
 
+    const storedIsGuest = localStorage.getItem("isGuest");
+    if (storedIsGuest) {
+      setIsGuest(storedIsGuest === "true");
+    }
+
     // Load totalPrice from local storage
     const storedTotalPrice = localStorage.getItem("totalPrice");
     if (storedTotalPrice) {
@@ -132,7 +138,9 @@ export const StateContext = ({ children }) => {
 
     // Save showCart to local storage
     localStorage.setItem("showCart", showCart.toString());
-  }, [cartItems, totalPrice, totalQuantities, qty, showCart]);
+
+    localStorage.setItem("isGuest", isGuest.toString());
+  }, [cartItems, totalPrice, totalQuantities, qty, showCart, isGuest]);
 
   const value = {
     showCart,
@@ -147,6 +155,8 @@ export const StateContext = ({ children }) => {
     toggleCartItemQuanitity,
     setQty,
     handleDiscountChange,
+    setIsGuest,
+    isGuest
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

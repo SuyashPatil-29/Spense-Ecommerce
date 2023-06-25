@@ -40,11 +40,11 @@ const Cart = () => {
         </button>
 
         {cartItems.length < 1 && (
-          <div className='empty-cart text-white'>
-            <AiOutlineShopping size={150} className='mx-auto' />
-            <h3 className='text-white'>Your cart is empty</h3>
+          <div className='empty-cart text-white place-content-center'>
+            <AiOutlineShopping size={150} className='mx-auto mt-40' />
+            <h3 className='text-white mt-3'>Your cart is empty</h3>
             <Link href='/shop'>
-              <button type='button' className='hover:bg-red-500 text-white lg:w-[450px] md:w-[400px] w-[250px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto mt-2 text-xl font-semibold' onClick={() => setShowCart(false)}>
+              <button type='button' className='hover:bg-red-500 text-white mt-10 lg:w-[450px] md:w-[400px] w-[250px] bg-red-600 py-4 rounded-2xl hover:scale-105 mx-auto text-xl font-semibold' onClick={() => setShowCart(false)}>
                 Continue Shopping
               </button>
             </Link>
