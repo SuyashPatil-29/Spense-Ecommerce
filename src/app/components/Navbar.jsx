@@ -34,12 +34,20 @@ const Navbar = () => {
 
   return (
     <div className={`flex justify-between fixed w-full z-[99999] bg-transparent top-3 ml-2`}>
+      {user ? (
       <Link href="/">
         <span className="font-bold tracking-tight lg:text-4xl md:text-3xl text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SpenseStore</span>
       </Link>
+      ):(
+      <div>
+        <span className="font-bold tracking-tight lg:text-4xl md:text-3xl text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SpenseStore</span>
+      </div>
+      )
+      }
+      
       <div className='flex items-center justify-between lg:gap-x-12 md:gap-x-10 gap-x-3 lg:mr-16 md:mr-16 mr-9'>
 
-        {user ? (
+        {user || isGuest ? (
           <div className='flex justify-between lg:gap-x-12 md:gap-x-10 gap-x-3'>
             <Link href="/shop?page=1" className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}>
               Shop

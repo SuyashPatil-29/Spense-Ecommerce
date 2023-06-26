@@ -22,11 +22,16 @@ const Login = () => {
         <div className=" h-[80vh] grid bg-black relative">
       <div className='flex flex-col justify-center items-center'>
         <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-            WELCOME TO <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SpenseStore</span> 
+            WELCOME TO <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500 uppercase">SpenseStore</span> 
         </h1>
-          <p className=" text-[rgb(124,134,227)] leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
-            Login to your account to continue or continue as a guest.
+        <div className='flex flex-col my-6 justify-around items-center'>
+          <p className=" text-[rgb(124,134,227)] text-base md:text-2xl mb-8 text-center md:text-left">
+            Login to your account to start shopping
           </p>
+          <p className=" text-[rgb(124,134,227)] -mt-4 text-base md:text-2xl mb-8 text-center md:text-left">
+            Or view as guest to explore.
+          </p>
+        </div>
         <button
           className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out max-w-[200px]"
           type="button"
