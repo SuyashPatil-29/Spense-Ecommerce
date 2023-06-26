@@ -22,6 +22,7 @@ const Navbar = () => {
       push("/");
     }
   };
+  
 
   const handleLogin = () => {
     if (isGuest) {

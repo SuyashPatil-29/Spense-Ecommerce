@@ -294,7 +294,7 @@ text-align: end;
 .footer-container .icons{
   font-size: 30px;
   display: flex;
-  gap: 10px;
+  gap: 20px;
 }
  .cart-heading{
   display: flex;

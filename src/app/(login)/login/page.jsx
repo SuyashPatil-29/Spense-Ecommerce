@@ -19,16 +19,18 @@ const Login = () => {
 
 
     return (
-        <div className=" h-[80vh] grid bg-black relative">
+        <div className=" h-[80vh] grid bg-black relative pt-28">
       <div className='flex flex-col justify-center items-center'>
-        <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-            WELCOME TO <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500 uppercase">SpenseStore</span> 
-        </h1>
+        <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center'>
+          <span className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">WELCOME&nbsp;</span>
+          <span className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left lg:pb-0 md:pb-0 pb-3">TO&nbsp;</span>
+          <span className="font-bold text-5xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500 uppercase">SpenseStore</span>
+        </div>
         <div className='flex flex-col my-6 justify-around items-center'>
           <p className=" text-[rgb(124,134,227)] text-base md:text-2xl mb-8 text-center md:text-left">
             Login to your account to start shopping
           </p>
-          <p className=" text-[rgb(124,134,227)] -mt-4 text-base md:text-2xl mb-8 text-center md:text-left">
+          <p className=" text-[rgb(124,134,227)] -mt-4 text-base md:text-2xl mb-4 text-center md:text-left">
             Or view as guest to explore.
           </p>
         </div>
