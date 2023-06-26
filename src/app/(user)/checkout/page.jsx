@@ -8,9 +8,8 @@ import Link from 'next/link.js';
 import { groq } from 'next-sanity';
 import CardDiscountComponent from "../../components/CardDiscountComponent.jsx"
 import { client } from '../../../../LIB/client.js';
+import db, {auth } from "../../../../LIB/firebase.js"
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../../LIB/firebase.js';
-import { useRouter } from "next/navigation"
 
 const discountQuery= groq`
 *[_type == "banner"].discount
@@ -23,20 +22,35 @@ const cardsQuery = groq`
 }
 `
 
-const paymentSuccess = ()=>{
-  toast.success("Payment Successful")
-}
+
+
 
 const Page = () => {
-  const { cartItems, totalPrice, cardDiscount, isGuest } = useStateContext();
-  const [user] = useAuthState(auth);
-
+  const { cartItems, totalPrice, cardDiscount, paidPrice, setPaidPrice } = useStateContext();
+  
   const [discount, setDiscount] = useState([])
   const [cards, setCards] = useState([])
-  const {push} = useRouter();
+  const [user] = useAuthState(auth);
+  console.log(cartItems);
+
+
+  // Add the new order to the "orders" collection in Firebase
+  const paymentSuccess = () => {
+    toast.success(`Payment of ${paidPrice} successful!`);
+      
+    const items = cartItems.map(item => ({
+      name: item.productName,
+      quantity: item.addedQuantity,
+    }));
+  
+    db.collection("orders").add({
+      user: user.displayName,
+      items: items,
+      price: paidPrice
+    });
+  };
 
   useEffect(() => {
-    {!user && !isGuest ? push("/login") : push("/")}
     const fetchDiscount = async () => {
       const discountData = await client.fetch(discountQuery);
       setDiscount(discountData);
@@ -48,7 +62,7 @@ const Page = () => {
       setCards(cardData);
     }
     fetchCard();
-  },[isGuest, push, user])
+  },[])
 
   const discountedPrice = Math.floor(totalPrice - (totalPrice * discount[0] / 100));
 
@@ -57,6 +71,7 @@ const Page = () => {
 
   const cardDiscountPrice = Math.floor(formattedDiscountedPrice * cardDiscount / 100);
   const formattedCardDiscountPrice = isNaN(cardDiscountPrice) ? 'N/A' : Math.floor(cardDiscountPrice);
+  setPaidPrice(formattedDiscountedPrice - formattedCardDiscountPrice)
 
   return (
     <div className=' bg-white bg-opacity-40 py-14 lg:mx-10 my-10 rounded-2xl border-2 border-black'>

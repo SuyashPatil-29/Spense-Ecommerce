@@ -16,6 +16,7 @@ export const StateContext = ({ children }) => {
   const [qty, setQty] = useState(1);
   const [cardDiscount, setCardDiscount] = useState(0);
   const [isGuest, setIsGuest] = useState(true);
+  const [paidPrice, setPaidPrice] = useState(0);
 
   let foundProduct;
   let index;
@@ -168,7 +169,9 @@ export const StateContext = ({ children }) => {
     setQty,
     handleDiscountChange,
     setIsGuest,
-    isGuest
+    isGuest,
+    paidPrice,
+    setPaidPrice
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
