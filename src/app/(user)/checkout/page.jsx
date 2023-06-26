@@ -37,7 +37,7 @@ const Page = () => {
   // Add the new order to the "orders" collection in Firebase
   const paymentSuccess = () => {
     toast.success(`Payment of ${paidPrice} successful!`);
-      
+
     const items = cartItems.map(item => ({
       name: item.productName,
       quantity: item.addedQuantity,

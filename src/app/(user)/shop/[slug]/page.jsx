@@ -8,6 +8,7 @@ import { client } from '../../../../../LIB/client';
 import urlFor from '../../../../../LIB/urlFor';
 import { useStateContext } from '../../../../../context/StateContext';
 import { Product } from '../../../components';
+import { toast } from 'react-hot-toast';
 
 const products = groq`
   *[_type == "vendor"].products[]
@@ -81,23 +82,6 @@ const ProductDetails = ({ params }) => {
 
   const { qty, setQty ,onAdd } = useStateContext();
 
-  const handleIncQty = () => {
-    if (qty >= selectedProduct.quantity) {
-      alert(`Quantity cannot be more than ${selectedProduct.quantity}`);
-    } else {
-      setQty((prevQty) => prevQty + 1);
-    }
-  };
-  
-  const handleDecQty = () => {
-    if (qty - 1 < 1) {
-      setQty(1);
-    } else {
-      setQty((prevQty) => prevQty - 1);
-    }
-  };
-  
-
   useEffect(() => {
     const matchedProduct = productArray.find(
       (product) => product.slug.current.trim().toLowerCase() === params.slug
@@ -111,6 +95,23 @@ const ProductDetails = ({ params }) => {
   }
 
   const { slug, productName, image, price, details, quantity } = selectedProduct;
+
+  const handleIncQty = () => {
+    if (qty >= selectedProduct.quantity) {
+      toast.error(`Quantity cannot be more than ${selectedProduct.quantity}`);
+    }
+     else {
+      setQty((prevQty) => prevQty + 1);
+    }
+  };
+  
+  const handleDecQty = () => {
+    if (qty - 1 < 1) {
+      setQty(1);
+    } else {
+      setQty((prevQty) => prevQty - 1);
+    }
+  };
 
   return (
     <div>

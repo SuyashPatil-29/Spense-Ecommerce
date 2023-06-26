@@ -26,34 +26,42 @@ export const StateContext = ({ children }) => {
 
   const onAdd = (product, addedQuantity) => {
     const checkProductInCart = cartItems.find((item) => item._key === product._key);
-
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * addedQuantity);
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + addedQuantity);
-    setCartItems((prevCartItems) => {
-      if (checkProductInCart) {
+  
+    if (checkProductInCart) {
+      const updatedQuantity = checkProductInCart.addedQuantity + addedQuantity;
+  
+      if (updatedQuantity > product.quantity) {
+        toast.error('Cannot add more than available quantity');
+        return;
+      }
+  
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * addedQuantity);
+      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + addedQuantity);
+      setCartItems((prevCartItems) => {
         const updatedCartItems = prevCartItems.map((cartProduct) => {
           if (cartProduct._key === product._key) {
             return {
               ...cartProduct,
-              addedQuantity: cartProduct.addedQuantity + addedQuantity,
+              addedQuantity: updatedQuantity,
             };
           }
           return cartProduct;
         });
         return updatedCartItems;
-      } else {
-        return [...prevCartItems, { ...product, addedQuantity }];
-      }
-    });
-    
-    if(user){
-      toast.success(`${addedQuantity} ${product.productName} added to the cart.`);
+      });
+    } else {
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * addedQuantity);
+      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + addedQuantity);
+      setCartItems((prevCartItems) => [...prevCartItems, { ...product, addedQuantity }]);
     }
-    else{
+  
+    if (user) {
+      toast.success(`${addedQuantity} ${product.productName} added to the cart.`);
+    } else {
       toast.error("Please login to continue.");
     }
-    
   };
+  
 
   const onRemove = (product) => {
     foundProduct = cartItems.find((item) => item._key === product._key);
