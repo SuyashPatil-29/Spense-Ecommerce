@@ -33,13 +33,13 @@ const Login = () => {
           </p>
         </div>
         <button
-          className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out max-w-[200px]"
+          className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out min-w-[250px] text-center"
           type="button"
           onClick={signIn}
         >
           Log in using Google
         </button>
-        <Link href="/admin/desk/vendor" className='text-pink-700 underline absolute bottom-2'>Log In As Vendor/Admin</Link>
+        <Link href="/admin/desk/vendor" className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out mt-6 min-w-[250px] text-center">Log In As Vendor/Admin</Link>
       </div>
       </div>
     );
