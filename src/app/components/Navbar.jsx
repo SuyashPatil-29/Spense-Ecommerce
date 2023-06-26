@@ -6,7 +6,7 @@ import "../styles/globals.css";
 import { useStateContext } from '../../../context/StateContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Cart from './Cart';
-import { auth, provider } from "../../../LIB/firebase"
+import { auth } from "../../../LIB/firebase"
 import { useRouter } from "next/navigation"
 
 const Navbar = () => {
@@ -35,7 +35,7 @@ const Navbar = () => {
 
   return (
     <div className={`flex justify-between fixed w-full z-[99999] bg-transparent top-3 ml-2`}>
-      {user ? (
+      {user || isGuest ? (
       <Link href="/">
         <span className="font-bold tracking-tight lg:text-4xl md:text-3xl text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SpenseStore</span>
       </Link>

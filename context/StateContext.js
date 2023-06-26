@@ -3,6 +3,8 @@ import { groq } from "next-sanity";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { client } from "../LIB/client";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../LIB/firebase";
 
 const Context = createContext();
 
@@ -17,6 +19,9 @@ export const StateContext = ({ children }) => {
 
   let foundProduct;
   let index;
+
+  const [user] = useAuthState(auth);
+
 
   const onAdd = (product, addedQuantity) => {
     const checkProductInCart = cartItems.find((item) => item._key === product._key);
@@ -39,7 +44,14 @@ export const StateContext = ({ children }) => {
         return [...prevCartItems, { ...product, addedQuantity }];
       }
     });
-    toast.success(`${addedQuantity} ${product.productName} added to the cart.`);
+    
+    if(user){
+      toast.success(`${addedQuantity} ${product.productName} added to the cart.`);
+    }
+    else{
+      toast.error("Please login to continue.");
+    }
+    
   };
 
   const onRemove = (product) => {
