@@ -8,6 +8,9 @@ import Link from 'next/link.js';
 import { groq } from 'next-sanity';
 import CardDiscountComponent from "../../components/CardDiscountComponent.jsx"
 import { client } from '../../../../LIB/client.js';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../../LIB/firebase.js';
+import { useRouter } from "next/navigation"
 
 const discountQuery= groq`
 *[_type == "banner"].discount
@@ -25,12 +28,15 @@ const paymentSuccess = ()=>{
 }
 
 const Page = () => {
-  const { cartItems, totalPrice, cardDiscount } = useStateContext();
+  const { cartItems, totalPrice, cardDiscount, isGuest } = useStateContext();
+  const [user] = useAuthState(auth);
 
   const [discount, setDiscount] = useState([])
   const [cards, setCards] = useState([])
+  const {push} = useRouter();
 
   useEffect(() => {
+    {!user && !isGuest ? push("/login") : push("/")}
     const fetchDiscount = async () => {
       const discountData = await client.fetch(discountQuery);
       setDiscount(discountData);
@@ -42,7 +48,7 @@ const Page = () => {
       setCards(cardData);
     }
     fetchCard();
-  },[])
+  },[isGuest, push, user])
 
   const discountedPrice = Math.floor(totalPrice - (totalPrice * discount[0] / 100));
 
