@@ -36,6 +36,15 @@ const Page = () => {
 
   // Add the new order to the "orders" collection in Firebase
   const paymentSuccess = () => {
+    if(cartItems.length === 0) {
+      toast.error("No items in cart!");
+      return;
+    }
+    if(user === null) {
+      toast.error("Please login to continue!");
+      return;
+    }
+    
     toast.success(`Payment of ${paidPrice} successful!`);
 
     const items = cartItems.map(item => ({
