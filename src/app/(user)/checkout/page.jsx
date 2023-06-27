@@ -9,6 +9,7 @@ import { groq } from 'next-sanity';
 import CardDiscountComponent from "../../components/CardDiscountComponent.jsx"
 import { client } from '../../../../LIB/client.js';
 import db, {auth } from "../../../../LIB/firebase.js"
+import { useRouter } from "next/navigation"
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 const discountQuery= groq`
@@ -31,7 +32,7 @@ const Page = () => {
   const [discount, setDiscount] = useState([])
   const [cards, setCards] = useState([])
   const [user] = useAuthState(auth);
-  console.log(cartItems);
+  const {push} = useRouter();
 
 
   // Add the new order to the "orders" collection in Firebase
@@ -44,8 +45,6 @@ const Page = () => {
       toast.error("Please login to continue!");
       return;
     }
-    
-    toast.success(`Payment of ${paidPrice} successful!`);
 
     const items = cartItems.map(item => ({
       name: item.productName,
@@ -57,6 +56,7 @@ const Page = () => {
       items: items,
       price: paidPrice
     });
+    push("/success")
   };
 
   useEffect(() => {

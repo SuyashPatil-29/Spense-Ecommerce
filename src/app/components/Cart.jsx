@@ -88,7 +88,7 @@ const Cart = () => {
                   <div className='item-desc'>
                     <div className='flex top'>
                       <h5 className='text-white'>{item.productName}</h5>
-                      <p className='text-white whitespace-nowrap'>Rs {Math.floor(item.price - (item.price * discount[0]) / 100) * item.addedQuantity}</p>
+                      <p className='text-white whitespace-nowrap text-md lg:mt-2 md:mt-2'>Rs {Math.floor(item.price - (item.price * discount[0]) / 100) * item.addedQuantity}</p>
                     </div>
                     <div className='flex bottom justify-between'>
                       <div className='flex justify-between w-full my-6 lg:max-w-[55%] md:max-w-[55%] max-w-[85%] lg:ml-0 md:ml-0 -ml-16'>

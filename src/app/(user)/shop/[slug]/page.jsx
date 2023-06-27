@@ -98,6 +98,9 @@ const ProductDetails = ({ params }) => {
 
   const handleIncQty = () => {
     if (qty >= selectedProduct.quantity) {
+      if(selectedProduct.quantity===0){
+        toast.error("Item out of stock")
+      }
       toast.error(`Quantity cannot be more than ${selectedProduct.quantity}`);
     }
      else {

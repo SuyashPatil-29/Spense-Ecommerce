@@ -31,7 +31,7 @@ export const StateContext = ({ children }) => {
       const updatedQuantity = checkProductInCart.addedQuantity + addedQuantity;
   
       if (updatedQuantity > product.quantity) {
-        toast.error('Cannot add more than available quantity');
+        toast.error('Items exceed available quantity');
         return;
       }
   
