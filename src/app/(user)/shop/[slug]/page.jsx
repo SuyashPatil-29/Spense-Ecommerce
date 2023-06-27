@@ -9,6 +9,7 @@ import urlFor from '../../../../../LIB/urlFor';
 import { useStateContext } from '../../../../../context/StateContext';
 import { Product } from '../../../components';
 import { toast } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
 
 const products = groq`
   *[_type == "vendor"].products[]
@@ -45,6 +46,8 @@ export const generateStaticParams = async () => {
 }
 
 const ProductDetails = ({ params }) => {
+
+  const {push} = useRouter();
   const [index, setIndex] = useState(0);
   const [productArray, setProductArray] = useState([]);
   const [vendor, setVendor] = useState([]);
@@ -115,6 +118,11 @@ const ProductDetails = ({ params }) => {
       setQty((prevQty) => prevQty - 1);
     }
   };
+
+  const handleBuyNow = () => {
+    onAdd(selectedProduct, qty);
+    push("/checkout")
+  }
 
   return (
     <div>
@@ -235,7 +243,7 @@ const ProductDetails = ({ params }) => {
                     ? 'cursor-not-allowed w-[200px] py-[10px] px-[20px] border-none mt-10 text-lg font-medium rounded-2xl shadow-2xl shadow-black bg-[#f02d34] text-white '
                     : `buy-now rounded-2xl shadow-2xl shadow-black`
                 }
-                onClick={() => console.log('hello')}
+                onClick={quantity === 0 ? null : handleBuyNow}
               >
                 {quantity === 0 ? 'Out of Stock' : 'Buy Now'}
               </button>

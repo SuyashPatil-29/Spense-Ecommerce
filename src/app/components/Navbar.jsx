@@ -24,6 +24,7 @@ const Navbar = () => {
   };
   
   const handleLogout = async () => {
+    setIsGuest(false)
     try {
       await auth.signOut();
       push("/login");
