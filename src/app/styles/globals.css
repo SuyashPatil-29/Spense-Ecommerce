@@ -83,6 +83,17 @@ width: 100%;
 .cart-icon:hover{
   transform: scale(1.1,1.1);
 }
+
+.coin-icon{
+  color :gold ;
+  font-size: 25px;
+  cursor: pointer;
+  position: relative;
+  transition: transform .4s ease;
+  border: none;
+  background-color: transparent;
+}
+
 .cart-item-qty{
   position: absolute;
   right: -8px;

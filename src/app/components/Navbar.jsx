@@ -1,9 +1,9 @@
 // Navbar.js
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
-import { TbCoinRupee } from 'react-icons/tb';
+import {GiTwoCoins} from 'react-icons/gi';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import db, { auth } from '../../../LIB/firebase';
@@ -24,6 +24,8 @@ const Navbar = () => {
       db.collection('users').doc(userId).set({ coins: 0 });
     }
   }, [user, loading, error, userData, userId]);
+
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const coins = userData?.data()?.coins || 0;
 
@@ -60,10 +62,24 @@ const Navbar = () => {
       
       <div className='flex items-center justify-between lg:gap-x-10 md:gap-x-10 gap-x-3 lg:mr-16 md:mr-16 mr-9'>
 
-      {user ? 
-      <div className='flex items-center gap-x-2'>
-        <span className='text-xl text-white'>{coins}</span> <TbCoinRupee className='cart-icon'/>
-      </div> : null}
+      {user ? (
+  <div
+    className="relative cursor-pointer"
+    onMouseEnter={() => setShowTooltip(true)}
+    onMouseLeave={() => setShowTooltip(false)}
+  >
+    <div className="flex items-center gap-x-2">
+      <span className="text-xl text-white">{coins}</span>
+      <GiTwoCoins className="coin-icon text-yellow-400" />
+    </div>
+    {showTooltip && (
+      <div className="absolute lg:block md:block hidden  top-full left-1/2 transform -translate-x-1/2 bg-black p-3 text-white rounded whitespace-nowrap">
+        Use these coins while checking out to avail extra discount.
+      </div>
+    )}
+  </div>
+) : null}
+
 
         {user || isGuest ? (
           <div className='flex justify-between lg:gap-x-12 md:gap-x-10 gap-x-3'>
