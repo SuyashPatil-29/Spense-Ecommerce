@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from "react-hot-toast";
@@ -6,34 +6,33 @@ import { useStateContext } from '../../../../context/StateContext.js';
 import urlFor from '../../../../LIB/urlFor';
 import Link from 'next/link.js';
 import { groq } from 'next-sanity';
-import CardDiscountComponent from "../../components/CardDiscountComponent.jsx"
+import CardDiscountComponent from "../../components/CardDiscountComponent.jsx";
 import { client } from '../../../../LIB/client.js';
-import db, {auth } from "../../../../LIB/firebase.js"
-import { useRouter } from "next/navigation"
+import db, { auth } from "../../../../LIB/firebase.js";
+import { useRouter } from "next/navigation";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const discountQuery= groq`
+const discountQuery = groq`
 *[_type == "banner"].discount
-`
+`;
 
 const cardsQuery = groq`
 *[_type == "cards"]{
   cardName,
   discount
 }
-`
+`;
 
 const Page = () => {
   const { cartItems, totalPrice, cardDiscount, paidPrice, setPaidPrice } = useStateContext();
 
-  const [discount, setDiscount] = useState([])
-  const [cards, setCards] = useState([])
+  const [discount, setDiscount] = useState([]);
+  const [cards, setCards] = useState([]);
   const [user] = useAuthState(auth);
   const { push } = useRouter();
 
-
   // Add the new order to the "orders" collection in Firebase
-  const paymentSuccess = () => {
+  const paymentSuccess = async () => {
     if (cartItems.length === 0) {
       toast.error("No items in cart!");
       return;
@@ -48,35 +47,44 @@ const Page = () => {
       quantity: item.addedQuantity,
     }));
 
-    db.collection("orders").add({
-      user: user.displayName,
-      items: items,
-      price: paidPrice
-    })
-      .then(() => {
-        // Clear cart items or perform any other necessary actions
-        toast.success("Order placed successfully!");
-        push("/success");
-      })
-      .catch(error => {
-        console.error("Error adding order to Firestore: ", error);
-        toast.error("Error placing order. Please try again later.");
+    try {
+      await db.collection("orders").add({
+        user: user.displayName,
+        items: items,
+        price: paidPrice
       });
+      toast.success("Order placed successfully!");
+
+      // Update the user's coins
+      const userDocRef = db.collection("users").doc(user.uid);
+      const userDoc = await userDocRef.get();
+      const previousCoins = userDoc.data()?.coins || 0;
+      const additionalCoins = Math.floor(paidPrice * 0.03); // 3% of paidPrice
+      const newCoins = previousCoins + additionalCoins;
+      await userDocRef.update({ coins: newCoins });
+
+      // Clear cart items or perform any other necessary actions
+      push("/success");
+    } catch (error) {
+      console.error("Error placing order or updating coins:", error);
+      toast.error("Error placing order. Please try again later.");
+    }
   };
 
   useEffect(() => {
     const fetchDiscount = async () => {
       const discountData = await client.fetch(discountQuery);
       setDiscount(discountData);
-    }
+    };
     fetchDiscount();
 
     const fetchCard = async () => {
       const cardData = await client.fetch(cardsQuery);
       setCards(cardData);
-    }
+    };
     fetchCard();
-  }, [])
+  }, []);
+
   const discountedPrice = Math.floor(totalPrice - (totalPrice * discount[0] / 100));
 
   // Check if discountedPrice is NaN
@@ -84,7 +92,7 @@ const Page = () => {
 
   const cardDiscountPrice = Math.floor(formattedDiscountedPrice * cardDiscount / 100);
   const formattedCardDiscountPrice = isNaN(cardDiscountPrice) ? 'N/A' : Math.floor(cardDiscountPrice);
-  setPaidPrice(formattedDiscountedPrice - formattedCardDiscountPrice)
+  setPaidPrice(formattedDiscountedPrice - formattedCardDiscountPrice);
 
   return (
     <div className=' bg-white bg-opacity-40 py-14 lg:mx-10 my-10 rounded-2xl border-2 border-black'>

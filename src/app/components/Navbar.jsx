@@ -1,33 +1,46 @@
+// Navbar.js
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
-import "../styles/globals.css";
-import { useStateContext } from '../../../context/StateContext';
+import { TbCoinRupee } from 'react-icons/tb';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDocument } from 'react-firebase-hooks/firestore';
+import db, { auth } from '../../../LIB/firebase';
+import { useRouter } from 'next/navigation';
+import { useStateContext } from '../../../context/StateContext';
 import Cart from './Cart';
-import { auth } from "../../../LIB/firebase"
-import { useRouter } from "next/navigation"
 
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantities, isGuest, setIsGuest } = useStateContext();
   const [user] = useAuthState(auth);
-  const { push } = useRouter();
+  const userId = user ? user.uid : null;
+  const [userData, loading, error] = useDocument(userId && db.collection('users').doc(userId));
+  const {push} = useRouter();
+
+  useEffect(() => {
+    if (user && !loading && !error && userData === null) {
+      // Create a new document for the user if it doesn't exist
+      db.collection('users').doc(userId).set({ coins: 0 });
+    }
+  }, [user, loading, error, userData, userId]);
+
+  const coins = userData?.data()?.coins || 0;
 
   const handleViewAsGuest = () => {
     setIsGuest(prevIsGuest => !prevIsGuest); // Toggle isGuest value
     if (isGuest) {
-      push("/login");
+        push('/login');
     } else {
-      push("/");
+        push('/');
     }
   };
   
   const handleLogout = async () => {
-    setIsGuest(false)
+    setIsGuest(false);
     try {
       await auth.signOut();
-      push("/login");
+        push('/login');
     } catch (error) {
       console.log('Error during logout:', error);
     }
@@ -46,6 +59,11 @@ const Navbar = () => {
       )}
       
       <div className='flex items-center justify-between lg:gap-x-12 md:gap-x-10 gap-x-3 lg:mr-16 md:mr-16 mr-9'>
+
+      {user ? 
+      <div className='flex items-center gap-x-2'>
+        <span className='text-xl text-white'>{coins}</span> <TbCoinRupee className='cart-icon'/>
+      </div> : null}
 
         {user || isGuest ? (
           <div className='flex justify-between lg:gap-x-12 md:gap-x-10 gap-x-3'>
