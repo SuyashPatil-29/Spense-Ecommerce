@@ -2,38 +2,33 @@
 "use client"
 import React from 'react';
 import db, { auth, provider } from '../../../../LIB/firebase';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
   const { push } = useRouter();
 
-  const signIn = (e) => {
+  const signIn = async (e) => {
     e.preventDefault();
 
-    auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user;
-        const userId = user.uid;
+    try {
+      const result = await auth.signInWithPopup(provider);
+      const user = result.user;
+      const userId = user.uid;
 
-        db.collection('users')
-          .doc(userId)
-          .get()
-          .then((doc) => {
-            if (!doc.exists) {
-              // Create a new document for the user if it doesn't exist
-              db.collection('users').doc(userId).set({ coins: 0 });
-            }
-          })
-          .catch((error) => {
-            console.log('Error checking user document:', error);
-          });
+      const userDocRef = db.collection('users').doc(userId);
+      const doc = await userDocRef.get();
 
-        push('/');
-      })
-      .catch((error) => alert(error.message));
+      if (!doc.exists) {
+        // Create a new document for the user if it doesn't exist
+        await userDocRef.set({ coins: 0 });
+      }
+
+      push('/');
+    } catch (error) {
+      console.log('Error signing in:', error);
+      // Handle the error as needed, e.g., show an error message
+    }
   };
 
   return (

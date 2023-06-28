@@ -58,7 +58,7 @@ const Navbar = () => {
         </div>
       )}
       
-      <div className='flex items-center justify-between lg:gap-x-12 md:gap-x-10 gap-x-3 lg:mr-16 md:mr-16 mr-9'>
+      <div className='flex items-center justify-between lg:gap-x-10 md:gap-x-10 gap-x-3 lg:mr-16 md:mr-16 mr-9'>
 
       {user ? 
       <div className='flex items-center gap-x-2'>
