@@ -1,39 +1,50 @@
-"use client";
+// Login.jsx
+"use client"
 import React from 'react';
 import db, { auth, provider } from '../../../../LIB/firebase';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
 
 const Login = () => {
   const { push } = useRouter();
 
   const signIn = (e) => {
     e.preventDefault();
-    
-    auth.signInWithPopup(provider)
+
+    auth
+      .signInWithPopup(provider)
       .then((result) => {
         const user = result.user;
-        const isNewUser = result.additionalUserInfo.isNewUser;
+        const userId = user.uid;
 
-        if (isNewUser) {
-          // Create a new document for the user if it's a new user
-          db.collection('users').doc(user.uid).set({ coins: 0 });
-        }
+        db.collection('users')
+          .doc(userId)
+          .get()
+          .then((doc) => {
+            if (!doc.exists) {
+              // Create a new document for the user if it doesn't exist
+              db.collection('users').doc(userId).set({ coins: 0 });
+            }
+          })
+          .catch((error) => {
+            console.log('Error checking user document:', error);
+          });
 
-        push("/");
+        push('/');
       })
       .catch((error) => alert(error.message));
   };
 
   return (
     <div className="h-[80vh] grid bg-black relative pt-28">
-      <div className='flex flex-col justify-center items-center'>
-        <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center'>
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex lg:flex-row md:flex-row flex-col justify-center items-center">
           <span className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">WELCOME&nbsp;</span>
           <span className="my-4 text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left lg:pb-0 md:pb-0 pb-3">TO&nbsp;</span>
           <span className="font-bold text-5xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500 uppercase">SpenseStore</span>
         </div>
-        <div className='flex flex-col my-6 justify-around items-center'>
+        <div className="flex flex-col my-6 justify-around items-center">
           <p className="text-[rgb(124,134,227)] text-base md:text-2xl mb-8 text-center md:text-left">
             Login to your account to start shopping
           </p>
@@ -48,7 +59,12 @@ const Login = () => {
         >
           Log in using Google
         </button>
-        <Link href="/admin/desk/vendor" className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out mt-6 min-w-[250px] text-center">Log In As Vendor/Admin</Link>
+        <Link
+          href="/admin/desk/vendor"
+          className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out mt-6 min-w-[250px] text-center"
+        >
+          Log In As Vendor/Admin
+        </Link>
       </div>
     </div>
   );
