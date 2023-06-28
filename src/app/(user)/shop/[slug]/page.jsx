@@ -10,6 +10,8 @@ import { useStateContext } from '../../../../../context/StateContext';
 import { Product } from '../../../components';
 import { toast } from 'react-hot-toast';
 import { useRouter } from "next/navigation";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../../../LIB/firebase';
 
 const products = groq`
   *[_type == "vendor"].products[]
@@ -54,6 +56,8 @@ const ProductDetails = ({ params }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [slugReturned, setSlug] = useState([])
   const [discount, setDiscount] = useState([])
+
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -120,8 +124,16 @@ const ProductDetails = ({ params }) => {
   };
 
   const handleBuyNow = () => {
-    onAdd(selectedProduct, qty);
-    push("/checkout")
+    if(!user){
+      toast.error("Please login to buy")
+    }
+    else if(selectedProduct.quantity===0){
+      toast.error("Item out of stock")
+    }
+    else{
+      onAdd(selectedProduct, qty);
+      push("/checkout")
+    }
   }
 
   return (

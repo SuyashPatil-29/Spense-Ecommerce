@@ -31,15 +31,15 @@ const Success = () => {
           <BsBagCheckFill />
         </p>
         <h2 className='text-white'>Thank you for your order!</h2>
-        <p className="email-msg">Check your email inbox for the receipt.</p>
-        <p className="description">
+        <p className="email-msg text-white">Check your email inbox for the receipt.</p>
+        <p className="description text-white">
           If you have any questions, please email
-          <a className="email" href="mailto:patilsuyash892@gmail.com">
+          <a className="email hover:scale-110 transition-all ease-in-out duration-300" href="mailto:patilsuyash892@gmail.com">
             patilsuyash892@gmail.com
           </a>
         </p>
         <Link href="/">
-            <button onClick={handleContinueShopping} className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-4 px-4 rounded-xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out mt-6 min-w-[250px] text-center">Continue Shopping</button>
+            <button onClick={handleContinueShopping} className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-4 px-4 rounded-xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out mt-6 min-w-[250px] text-center ease-in-out">Continue Shopping</button>
         </Link>
       </div>
     </div>

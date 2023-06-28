@@ -23,25 +23,22 @@ const cardsQuery = groq`
 }
 `
 
-
-
-
 const Page = () => {
   const { cartItems, totalPrice, cardDiscount, paidPrice, setPaidPrice } = useStateContext();
-  
+
   const [discount, setDiscount] = useState([])
   const [cards, setCards] = useState([])
   const [user] = useAuthState(auth);
-  const {push} = useRouter();
+  const { push } = useRouter();
 
 
   // Add the new order to the "orders" collection in Firebase
   const paymentSuccess = () => {
-    if(cartItems.length === 0) {
+    if (cartItems.length === 0) {
       toast.error("No items in cart!");
       return;
     }
-    if(user === null) {
+    if (user === null) {
       toast.error("Please login to continue!");
       return;
     }
@@ -50,13 +47,21 @@ const Page = () => {
       name: item.productName,
       quantity: item.addedQuantity,
     }));
-  
+
     db.collection("orders").add({
       user: user.displayName,
       items: items,
       price: paidPrice
-    });
-    push("/success")
+    })
+      .then(() => {
+        // Clear cart items or perform any other necessary actions
+        toast.success("Order placed successfully!");
+        push("/success");
+      })
+      .catch(error => {
+        console.error("Error adding order to Firestore: ", error);
+        toast.error("Error placing order. Please try again later.");
+      });
   };
 
   useEffect(() => {
@@ -66,13 +71,12 @@ const Page = () => {
     }
     fetchDiscount();
 
-    const fetchCard = async () =>{
+    const fetchCard = async () => {
       const cardData = await client.fetch(cardsQuery);
       setCards(cardData);
     }
     fetchCard();
-  },[])
-
+  }, [])
   const discountedPrice = Math.floor(totalPrice - (totalPrice * discount[0] / 100));
 
   // Check if discountedPrice is NaN
