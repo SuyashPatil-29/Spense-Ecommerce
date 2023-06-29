@@ -31,9 +31,10 @@ const Page = () => {
   const [cards, setCards] = useState([]);
   const [user] = useAuthState(auth);
   const { push } = useRouter();
+  const [coinsUsed, setCoinsUsed] = useState(false);
 
   // Add the new order to the "orders" collection in Firebase
-  const paymentSuccess = async () => {
+  const paymentSuccess = async (useCoins) => {
     if (cartItems.length === 0) {
       toast.error("No items in cart!");
       return;
@@ -43,7 +44,7 @@ const Page = () => {
       return;
     }
 
-    const items = cartItems.map(item => ({
+    const items = cartItems.map((item) => ({
       name: item.productName,
       quantity: item.addedQuantity,
     }));
@@ -54,15 +55,23 @@ const Page = () => {
         items: items,
         price: paidPrice
       });
-      toast.success("Order placed successfully!");
 
-      // Update the user's coins
-      const userDocRef = db.collection("users").doc(user.uid);
-      const userDoc = await userDocRef.get();
-      const previousCoins = userDoc.data()?.coins || 0;
-      const additionalCoins = Math.floor(paidPrice * 0.03); // 3% of paidPrice
-      const newCoins = previousCoins + additionalCoins;
-      await userDocRef.update({ coins: newCoins });
+      if (useCoins) {
+        // Update the user's coins to 0
+        const userDocRef = db.collection("users").doc(user.uid);
+        await userDocRef.update({ coins: 0 });
+        toast.success("Coins used successfully!");
+        return; // Stop execution here
+      }    
+
+        // Update the user's coins based on the paid price
+        const userDocRef = db.collection("users").doc(user.uid);
+        const userDoc = await userDocRef.get();
+        const previousCoins = userDoc.data()?.coins || 0;
+        const additionalCoins = Math.floor(paidPrice * 0.03); // 3% of paidPrice
+        const newCoins = previousCoins + additionalCoins;
+        await userDocRef.update({ coins: newCoins });
+        toast.success("Order placed successfully!");
 
       // Clear cart items or perform any other necessary actions
       push("/success");
@@ -71,6 +80,7 @@ const Page = () => {
       toast.error("Error placing order. Please try again later.");
     }
   };
+
 
   useEffect(() => {
     const fetchDiscount = async () => {
@@ -102,36 +112,36 @@ const Page = () => {
           <p className="text-xl font-medium text-black">Order Summary</p>
           <p className="text-gray-900">Check your items. And select a suitable shipping method.</p>
           <div className="mt-8 space-y-3 rounded-2xl border-black border-2 px-2 py-4 sm:px-6">
-          {cartItems.map((item) => {
-            return(
+            {cartItems.map((item) => {
+              return (
                 <Link href={`/shop/${item.slug.current}`} key={item.slug.current} className="flex flex-col rounded-lg bg-white bg-opacity-30 space-y-5 sm:flex-row hover:scale-105 transition-all duration-300">
-              <Image
-                className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                src={urlFor(item.image[0]).url()}
-                alt=""
-                height={96}
-                width={112}
-              />
-              <div className="flex w-full flex-col px-4 py-4">
-                <span className="font-semibold text-black">{item.productName}</span>
-                <div>
-                    {discount[0] ? (
-                    <div className='flex gap-6 float-right'>
-                      <p className="line-through text-red-500"><span className='font-semibold text-lg'>Rs {item.price}</span></p>
-                      <p className="font-semibold text-black text-lg">Rs {Math.floor(item.price - (item.price*discount[0]/100))}</p>
+                  <Image
+                    className="m-2 h-24 w-28 rounded-md border object-cover object-center"
+                    src={urlFor(item.image[0]).url()}
+                    alt=""
+                    height={96}
+                    width={112}
+                  />
+                  <div className="flex w-full flex-col px-4 py-4">
+                    <span className="font-semibold text-black">{item.productName}</span>
+                    <div>
+                      {discount[0] ? (
+                        <div className='flex gap-6 float-right'>
+                          <p className="line-through text-red-500"><span className='font-semibold text-lg'>Rs {item.price}</span></p>
+                          <p className="font-semibold text-black text-lg">Rs {Math.floor(item.price - (item.price * discount[0] / 100))}</p>
+                        </div>
+                      ) : (
+                        <p className="font-semibold text-black text-lg float-right">Rs {item.price}</p>
+                      )
+                      }
+                      <span className='float-left text-black'>Qty : {item.addedQuantity}</span>
                     </div>
-                    ) : (
-                      <p className="font-semibold text-black text-lg float-right">Rs {item.price}</p>
-                    )
-                    }
-                    <span className='float-left text-black'>Qty : {item.addedQuantity}</span>
-                </div>
-                <p className="text-lg font-bold text-black">Total Price: Rs {Math.floor((item.price-(item.price*discount[0]/100))*item.addedQuantity)}</p>
-              </div>
-            </Link>
-            )
-          })}
-            
+                    <p className="text-lg font-bold text-black">Total Price: Rs {Math.floor((item.price - (item.price * discount[0] / 100)) * item.addedQuantity)}</p>
+                  </div>
+                </Link>
+              )
+            })}
+
           </div>
 
           <div className="flex bg-gray-800 rounded-2xl mt-8 p-4 gap-2 items-center bg-opacity-60">
@@ -163,22 +173,29 @@ const Page = () => {
                   <p className="font-bold text-black text-lg">Rs {(formattedDiscountedPrice - formattedCardDiscountPrice)}</p>
                 </div>
               ) :
-              <p className="font-bold text-lg text-black">Rs {formattedDiscountedPrice}</p>
+                <p className="font-bold text-lg text-black">Rs {formattedDiscountedPrice}</p>
               }
             </div>
           </div>
-        <p className="mt-8 text-lg font-medium text-black">Pay With A Card To Avail Exciting Offers</p>
+          <p className="mt-8 text-lg font-medium text-black">Pay With A Card To Avail Exciting Offers</p>
           <form className="mt-5 grid gap-6">
             {cards.map((card, index) => {
-              return(
+              return (
                 <CardDiscountComponent key={index} index={index} card={card} />
               )
             })}
           </form>
-          <div className="flex justify-end mt-8 bottom-3 right-[135px]">
-            <button onClick={paymentSuccess} className="bg-blue-500 w-full place-content-center hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+          <div className="flex gap-4 flex-col justify-end mt-8 bottom-3 right-[135px]">
+            <button
+              onClick={() => paymentSuccess(true)}
+              className="bg-blue-500 w-full place-content-center hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg"
+            >
+              Use Coins
+            </button>
+            <button onClick={() => paymentSuccess(false)} className="bg-blue-500 w-full place-content-center hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
               Pay
             </button>
+
           </div>
         </div>
       </div>
