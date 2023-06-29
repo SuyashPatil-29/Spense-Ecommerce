@@ -31,7 +31,7 @@ const Page = () => {
   const [cards, setCards] = useState([]);
   const [user] = useAuthState(auth);
   const { push } = useRouter();
-  const [coinsUsed, setCoinsUsed] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   // Add the new order to the "orders" collection in Firebase
   const paymentSuccess = async (useCoins) => {
@@ -64,7 +64,7 @@ const Page = () => {
         const userDocRef = db.collection("users").doc(user.uid);
         const userDoc = await userDocRef.get();
         const coinsToUse = userDoc.data()?.coins || 0;
-        updatedPaidPrice -= coinsToUse*0.5;
+        updatedPaidPrice -= Math.floor(coinsToUse*0.5);
         await userDocRef.update({ coins: 0 });
         toast.success("Coins used successfully!");
         // Update the paidPrice state
@@ -155,7 +155,12 @@ const Page = () => {
 
           </div>
 
-          <div className="flex bg-gray-800 rounded-2xl mt-8 p-4 gap-2 items-center bg-opacity-60">
+          <div
+            className="relative cursor-pointer"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <div className="flex bg-gray-800 rounded-2xl mt-8 p-4 gap-2 items-center bg-opacity-60">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6 text-white"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <div className="flex items-center gap-x-2">
               <span className="text-xl text-white">You will recieve {Math.floor(paidPrice * 0.03)}</span>
@@ -163,6 +168,14 @@ const Page = () => {
               <span className="text-xl text-white">for this purchase.</span>
             </div>
           </div>
+          {showTooltip && (
+            <div className="absolute lg:block md:block hidden top-full left-1/2 transform -translate-x-1/2 bg-black p-3 text-white rounded-xl whitespace-nowrap">
+              <p>These coins can be used during your next purchase.</p>
+              <p>2 coins = 1 Rs Off.</p>
+            </div>
+          )}      
+          </div>
+          
 
         </div>
         <div className=" p-8 rounded-2xl">
@@ -203,8 +216,8 @@ const Page = () => {
             >
               Use Coins
             </button>
-            <button onClick={() => paymentSuccess(false)} className="bg-blue-500 w-full place-content-center hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
-              Pay
+            <button onClick={() => paymentSuccess(false)} className=" bg-rose-500 w-full place-content-center hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg">
+              Pay Now
             </button>
 
           </div>
