@@ -138,7 +138,7 @@ const Navbar = () => {
           </div>
         </div>
         {user && (
-            <div className="relative lg:ml-0 md:ml-0 ml-36">
+            <div className="relative lg:ml-0 md:ml-0 ml-28">
               <button
                 type="button"
                 className="cart-icon"

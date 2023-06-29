@@ -48,7 +48,7 @@ const HeaderMenu = () => {
   };
 
   return (
-    <div className="menu bg-base-200 w-[90vw] rounded-box absolue mt-10 -mb-8 gap-3">
+    <div className="menu bg-gray-800 w-[90vw] rounded-box absolue mt-10 -mb-8 gap-3">
         {user ? (
           <div>
             <div className="flex items-center">
