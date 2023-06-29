@@ -50,6 +50,9 @@ const Page = () => {
     }));
 
     try {
+
+      let updatedPaidPrice = paidPrice;
+
       await db.collection("orders").add({
         user: user.displayName,
         items: items,
@@ -59,8 +62,13 @@ const Page = () => {
       if (useCoins) {
         // Update the user's coins to 0
         const userDocRef = db.collection("users").doc(user.uid);
+        const userDoc = await userDocRef.get();
+        const coinsToUse = userDoc.data()?.coins || 0;
+        updatedPaidPrice -= coinsToUse*0.5;
         await userDocRef.update({ coins: 0 });
         toast.success("Coins used successfully!");
+        // Update the paidPrice state
+        setPaidPrice(updatedPaidPrice);
         return; // Stop execution here
       }    
 
@@ -103,7 +111,10 @@ const Page = () => {
 
   const cardDiscountPrice = Math.floor(formattedDiscountedPrice * cardDiscount / 100);
   const formattedCardDiscountPrice = isNaN(cardDiscountPrice) ? 'N/A' : Math.floor(cardDiscountPrice);
-  setPaidPrice(formattedDiscountedPrice - formattedCardDiscountPrice);
+
+  useEffect(()=>{
+    setPaidPrice(formattedDiscountedPrice - formattedCardDiscountPrice);
+  },[formattedCardDiscountPrice, formattedDiscountedPrice, setPaidPrice])
 
   return (
     <div className=' bg-white bg-opacity-40 py-14 lg:mx-10 my-10 rounded-2xl border-2 border-black'>
@@ -170,7 +181,7 @@ const Page = () => {
               {cardDiscount && cartItems.length > 0 ? (
                 <div className='flex gap-6'>
                   <p className="font-bold text-lg text-black line-through">Rs {formattedDiscountedPrice}</p>
-                  <p className="font-bold text-black text-lg">Rs {(formattedDiscountedPrice - formattedCardDiscountPrice)}</p>
+                  <p className="font-bold text-black text-lg">Rs {paidPrice}</p>
                 </div>
               ) :
                 <p className="font-bold text-lg text-black">Rs {formattedDiscountedPrice}</p>
