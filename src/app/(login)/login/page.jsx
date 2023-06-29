@@ -4,9 +4,11 @@ import React from 'react';
 import db, { auth, provider } from '../../../../LIB/firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useStateContext } from '../../../../context/StateContext';
 
 const Login = () => {
   const { push } = useRouter();
+  const { setuserCoins} = useStateContext()
 
   const signIn = async (e) => {
     e.preventDefault();
@@ -22,6 +24,10 @@ const Login = () => {
       if (!doc.exists) {
         // Create a new document for the user if it doesn't exist
         await userDocRef.set({ coins: 0 });
+        setuserCoins(0); // Set userCoins to 0 initially
+      } else {
+        const coins = doc.data().coins;
+        setuserCoins(coins); // Set userCoins to the value from Firebase
       }
 
       push('/');

@@ -39,7 +39,7 @@ const Success = () => {
           </a>
         </p>
         <Link href="/">
-            <button onClick={handleContinueShopping} className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-4 px-4 rounded-xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out mt-6 min-w-[250px] text-center ease-in-out">Continue Shopping</button>
+            <button onClick={handleContinueShopping} className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-4 px-4 rounded-xl focus:ring transform transition hover:scale-105 duration-300 mt-6 min-w-[250px] text-center ease-in-out">Continue Shopping</button>
         </Link>
       </div>
     </div>

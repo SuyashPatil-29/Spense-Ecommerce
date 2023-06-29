@@ -11,6 +11,7 @@ import { client } from '../../../../LIB/client.js';
 import db, { auth } from "../../../../LIB/firebase.js";
 import { useRouter } from "next/navigation";
 import { useAuthState } from 'react-firebase-hooks/auth';
+import {GiTwoCoins} from 'react-icons/gi';
 
 const discountQuery = groq`
 *[_type == "banner"].discount
@@ -131,6 +132,15 @@ const Page = () => {
             )
           })}
             
+          </div>
+
+          <div className="flex bg-gray-800 rounded-2xl mt-8 p-4 gap-2 items-center bg-opacity-60">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6 text-white"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div className="flex items-center gap-x-2">
+              <span className="text-xl text-white">You will recieve {Math.floor(paidPrice * 0.03)}</span>
+              <GiTwoCoins className="coin-icon text-yellow-400" />
+              <span className="text-xl text-white">for this purchase.</span>
+            </div>
           </div>
 
         </div>
