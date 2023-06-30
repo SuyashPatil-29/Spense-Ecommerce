@@ -155,10 +155,10 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <button className='lg:hidden md:hidden block mr-12' onClick={toggleMenu}>
+        <button className='lg:hidden md:hidden block mr-12 ' onClick={toggleMenu}>
           <span className='sr-only'>Menu</span>
           <svg
-            className={`h-6 w-6 text-black dark:text-white`}
+            className={`h-6 w-6 cart-icon`}
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'

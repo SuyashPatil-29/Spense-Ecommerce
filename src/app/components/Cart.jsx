@@ -84,11 +84,11 @@ const Cart = () => {
 
               return (
                 <div className='product bg-white bg-opacity-20 rounded-2xl text-white mx-2 my-3 max-h-[250px]' key={index}>
-                  <Image src={urlFor(item.image[0]).url()} className='cart-product-image' alt='Product Image' width={180} height={150} />
+                  <Image src={urlFor(item.image[0]).url()} className='cart-product-image my-auto' alt='Product Image' width={180} height={150} />
                   <div className='item-desc'>
                     <div className='flex top'>
                       <h5 className='text-white'>{item.productName}</h5>
-                      <p className='text-white whitespace-nowrap text-md lg:mt-2 md:mt-2'>Rs {Math.floor(item.price - (item.price * discount[0]) / 100) * item.addedQuantity}</p>
+                      <p className='text-white whitespace-nowrap text-lg font-medium lg:mt-2 md:mt-2'>Rs {Math.floor(item.price - (item.price * discount[0]) / 100) * item.addedQuantity}</p>
                     </div>
                     <div className='flex bottom justify-between'>
                       <div className='flex justify-between w-full my-6 lg:max-w-[55%] md:max-w-[55%] max-w-[85%] lg:ml-0 md:ml-0 -ml-16'>

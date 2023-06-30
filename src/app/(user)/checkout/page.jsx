@@ -50,38 +50,40 @@ const Page = () => {
     }));
 
     try {
-
       let updatedPaidPrice = paidPrice;
-
+  
       await db.collection("orders").add({
         user: user.displayName,
         items: items,
-        price: paidPrice
+        price: paidPrice,
       });
-
+  
       if (useCoins) {
-        // Update the user's coins to 0
         const userDocRef = db.collection("users").doc(user.uid);
         const userDoc = await userDocRef.get();
         const coinsToUse = userDoc.data()?.coins || 0;
-        updatedPaidPrice -= Math.floor(coinsToUse*0.5);
+        const coinsPrice = Math.floor(coinsToUse * 0.5);
+  
+        if (coinsPrice > paidPrice) {
+          toast.error("Price cannot be less than coins!");
+          return;
+        }
+  
+        updatedPaidPrice -= coinsPrice;
         await userDocRef.update({ coins: 0 });
         toast.success("Coins used successfully!");
-        // Update the paidPrice state
         setPaidPrice(updatedPaidPrice);
-        return; // Stop execution here
-      }    
-
-        // Update the user's coins based on the paid price
-        const userDocRef = db.collection("users").doc(user.uid);
-        const userDoc = await userDocRef.get();
-        const previousCoins = userDoc.data()?.coins || 0;
-        const additionalCoins = Math.floor(paidPrice * 0.03); // 3% of paidPrice
-        const newCoins = previousCoins + additionalCoins;
-        await userDocRef.update({ coins: newCoins });
-        toast.success("Order placed successfully!");
-
-      // Clear cart items or perform any other necessary actions
+        return;
+      }
+  
+      const userDocRef = db.collection("users").doc(user.uid);
+      const userDoc = await userDocRef.get();
+      const previousCoins = userDoc.data()?.coins || 0;
+      const additionalCoins = Math.floor(paidPrice * 0.03);
+      const newCoins = previousCoins + additionalCoins;
+      await userDocRef.update({ coins: newCoins });
+      toast.success("Order placed successfully!");
+  
       push("/success");
     } catch (error) {
       console.error("Error placing order or updating coins:", error);

@@ -33,7 +33,7 @@ const Success = () => {
         <h2 className='text-white'>Thank you for your order!</h2>
         <p className="email-msg text-white">Check your email inbox for the receipt.</p>
         <p className="description text-white">
-          If you have any questions, please email
+          If you have any queries, please email us at
           <a className="email hover:scale-110 transition-all ease-in-out duration-300" href="mailto:patilsuyash892@gmail.com">
             patilsuyash892@gmail.com
           </a>
