@@ -1,10 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project that uses [Tailwind Css](https://tailwindcss.com/)
 
 ## Getting Started
-The project is hosted on [spenseshop.vercel.app](https://spenseshop.vercel.app/)
-You can watch the [video demo](https://www.youtube.com/watch?v=RLlpzTLQjUE)
+The project is hosted on [spenseshop.vercel.app](https://spenseshop.vercel.app/) .
+You can watch the [video demo](https://www.youtube.com/watch?v=RLlpzTLQjUE) here.
 
-Admin acccess is given to spensetechchallenge@spense.money. Admin panel can be accessed from [https://spenseshop.vercel.app/admin](https://spenseshop.vercel.app/admin)
+Admin acccess is given to spensetechchallenge@spense.money and jha.varun6@gmail.com. Admin panel can be accessed from [https://spenseshop.vercel.app/admin](https://spenseshop.vercel.app/admin)
 
 ## Aboute SpenseStore
 
