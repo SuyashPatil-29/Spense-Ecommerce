@@ -8,10 +8,9 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import db, { auth } from '../../../LIB/firebase';
 import { useRouter } from 'next/navigation';
 import { useStateContext } from '../../../context/StateContext';
-import Cart from './Cart';
 
 const HeaderMenu = () => {
-  const { showCart, setShowCart, totalQuantities, isGuest, setIsGuest } = useStateContext();
+  const { isGuest, setIsGuest } = useStateContext();
   const [user] = useAuthState(auth);
   const userId = user ? user.uid : null;
   const [userData, loading, error] = useDocument(userId && db.collection('users').doc(userId));
@@ -20,11 +19,12 @@ const HeaderMenu = () => {
   useEffect(() => {
     if (user && !loading && !error && userData === null) {
       // Create a new document for the user if it doesn't exist
-      db.collection('users').doc(userId).set({ coins: 0 });
+      db.collection('users')
+        .doc(userId)
+        .set({ coins: 0 });
     }
   }, [user, loading, error, userData, userId]);
 
-  const [showTooltip, setShowTooltip] = useState(false);
 
   const coins = userData?.data()?.coins || 0;
 
@@ -50,17 +50,10 @@ const HeaderMenu = () => {
   return (
     <div className="menu bg-gray-800 w-[90vw] rounded-box absolue mt-10 -mb-8 gap-3">
         {user ? (
-          <div>
             <div className="flex items-center">
               <span className="text-xl text-white">{coins}</span>
               <GiTwoCoins className="coin-icon text-yellow-400" />
             </div>
-            {showTooltip && (
-              <div className="absolute lg:block md:block hidden top-full left-1/2 transform -translate-x-1/2 bg-black p-3 text-white rounded whitespace-nowrap">
-                Use these coins while checking out to avail extra discount.
-              </div>
-            )}
-          </div>
         ) : null}
         <hr className="w-full border-b-2 border-pink-500"/>
 
@@ -82,6 +75,7 @@ const HeaderMenu = () => {
           </div>
         ) : null}
         <hr className="w-full border-b-2 border-pink-500"/>
+        
         <div>
           {user ? (
             <button
