@@ -61,14 +61,14 @@ const HeaderMenu = () => {
           <div className="flex flex-col gap-3">
             <Link
               href="/shop?page=1"
-              className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}
+              className={`relative lg:text-xl md:text-xl uppercase text-xl text-white`}
             >
               Shop
             </Link>
             <hr className="w-full border-b-2 border-pink-500"/>
             <Link
               href="/vendors"
-              className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}
+              className={`relative lg:text-xl md:text-xl uppercase text-xl text-white`}
             >
               Store
             </Link>
@@ -80,14 +80,14 @@ const HeaderMenu = () => {
           {user ? (
             <button
               onClick={handleLogout}
-              className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}
+              className={`relative lg:text-xl md:text-xl uppercase text-xl text-white`}
             >
               Logout
             </button>
           ) : (
             <button
               onClick={handleViewAsGuest}
-              className={`relative lg:text-xl md:text-xl uppercase text-xl transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 text-white after:bg-white after:w-0 after:transition-all hover:after:w-full`}
+              className={`relative lg:text-xl md:text-xl uppercase text-xl text-white`}
             >
               {isGuest ? 'Login' : 'View as Guest'}
             </button>

@@ -10,7 +10,7 @@ const vendorsQuery = groq`
 async function VendorsPage() {
     const vendors = await client.fetch(vendorsQuery)
   return (
-    <div className='flex gap-6 justify-center items-center min-h-[90vh] min-w-[90vw] over'>
+    <div className='lg:flex-row md:flex-row flex flex-col gap-6 justify-center items-center min-h-[80vh] min-w-[90vw]'>
         {vendors.map((vendor)=>{
             return <VendorDisplay key={vendor._id} vendor={vendor} />
         })}
