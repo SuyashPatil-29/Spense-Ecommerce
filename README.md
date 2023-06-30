@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project that uses [Tailwind Css](https://tailwindcss.com/)
 
 ## Getting Started
+The project is hosted on [spenseshop.vercel.app](https://spenseshop.vercel.app/)
+You can watch the [video demo](https://www.youtube.com/watch?v=RLlpzTLQjUE)
 
-First, run the development server:
+Admin acccess is given to spensetechchallenge@spense.money. Admin panel can be accessed from [https://spenseshop.vercel.app/admin](https://spenseshop.vercel.app/admin)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Aboute SpenseStore
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The whole web app was created using NextJS 13 App Dir and tailwind css. It is blazingly fast with a perfect score from lighthouse.
+![Lighthouse performance](image.png)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+There is login powered by firebase.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Every checkout details are stored like the following
 
-## Learn More
+![Firestore database](image-1.png)
 
-To learn more about Next.js, take a look at the following resources:
+Admin Panel is very smooth and looks like the following.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Admin pannel image](image-2.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Key Features
+ 
+- Seperate Admin and User Login.
+- Admin Panel.
+- Fully responsive to all devices.
+- Login or view as guest so user can see products without logging in.
+- Rewards Based Coins system.
+- Cart Functionality.
+- Card Discounts Functionality.
+- Events can be organised where user gets extra dicounts.
+- Local storage so if user comes back, items stay in cart.
+- Hover effect in shop items to show all images on hover.
+- Products can be viewed in different categories.
+- Seperate STORE where all vendors and their products are listed.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
