@@ -50,12 +50,14 @@ const HeaderMenu = () => {
   return (
     <div className="menu bg-gray-800 w-[90vw] rounded-box absolue mt-10 -mb-8 gap-3">
         {user ? (
+          <diV>
             <div className="flex items-center">
               <span className="text-xl text-white">{coins}</span>
               <GiTwoCoins className="coin-icon text-yellow-400" />
             </div>
+            <hr className="w-full border-b-2 border-pink-500"/>
+          </diV>
         ) : null}
-        <hr className="w-full border-b-2 border-pink-500"/>
 
         {user || isGuest ? (
           <div className="flex flex-col gap-3">
@@ -72,9 +74,9 @@ const HeaderMenu = () => {
             >
               Store
             </Link>
+            <hr className="w-full border-b-2 border-pink-500"/>
           </div>
         ) : null}
-        <hr className="w-full border-b-2 border-pink-500"/>
         
         <div>
           {user ? (
@@ -87,7 +89,7 @@ const HeaderMenu = () => {
           ) : (
             <button
               onClick={handleViewAsGuest}
-              className={`relative lg:text-xl md:text-xl uppercase text-xl text-white`}
+              className={`relative uppercase text-xl text-white`}
             >
               {isGuest ? 'Login' : 'View as Guest'}
             </button>
