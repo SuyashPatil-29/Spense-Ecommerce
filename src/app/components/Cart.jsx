@@ -84,7 +84,7 @@ const Cart = () => {
 
               return (
                 <div className='product bg-white bg-opacity-20 rounded-2xl text-white mx-2 my-3 max-h-[250px]' key={index}>
-                  <Image src={urlFor(item.image[0]).url()} className='cart-product-image my-auto' alt='Product Image' width={180} height={150} />
+                  <Image src={urlFor(item.image[0]).url()} className='cart-product-image lg:my-auto my-0' alt='Product Image' width={180} height={150} />
                   <div className='item-desc'>
                     <div className='flex top'>
                       <h5 className='text-white'>{item.productName}</h5>
